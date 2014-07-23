@@ -19,6 +19,10 @@ Dinesafe XML to ActiveRecord parser
 ---
 https://github.com/openciti/dinesafe/blob/master/config/initializers/dinesafe_scraper.rb
 
+ShapeFile grabber & parser
+---
+https://github.com/openciti/dinesafe/blob/master/config/initializers/dinesafe_geo.rb
+
 Rake Tasks
 ---
 https://github.com/openciti/dinesafe/blob/master/lib/tasks/dinesafe_tasks.rake
@@ -26,5 +30,5 @@ https://github.com/openciti/dinesafe/blob/master/lib/tasks/dinesafe_tasks.rake
 Usage
 ---
 
-    rake dinesafe:grab dinesafe:parse
+    rake dinesafe:grab dinesafe:parse dinesafe:shapefile dinesafe:geo
     rails s
