@@ -9,8 +9,8 @@ class DinesafeGrabber
     # affix a timestamp to the filename in order to facilitate keeping old version on file
     timestamp = Time.now.to_i
     filename = timestamp.to_s + '_dinesafe.xml'
-    dinesafe_asset_path = 'app/assets/dinesafe/'
-    fullpath = dinesafe_asset_path + filename
+    dinesafe_asset_path = 'app/assets/dinesafe'
+    fullpath = File.join(dinesafe_asset_path, filename)
 
     Dir.mkdir(dinesafe_asset_path) unless Dir.exists?(dinesafe_asset_path)
 

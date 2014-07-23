@@ -24,6 +24,8 @@
 
 # rows start at 1
 
+# The Inspection model is being kept while the Venue & Event models are being tested over a longer term
+
 class DinesafeScraper
   attr_accessor :xml_file_path, :fresh
 

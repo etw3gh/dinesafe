@@ -14,6 +14,12 @@ gem 'rufus-scheduler'
 # for file diff
 gem 'diffy'
 
+# for shapefile parsing
+gem 'dbf', '~>2.0.7'
+gem 'rgeo', '~>0.3.3'
+gem 'rgeo-shapefile', '~>0.2.3'
+
+
 # for pry in the rails console
 gem 'pry-rails'
 
