@@ -23,7 +23,7 @@ ShapeFile grabber & parser
 ---
 https://github.com/openciti/dinesafe/blob/master/config/initializers/dinesafe_geo.rb
 
-[screencap]("https://raw.githubusercontent.com/openciti/dinesafe/master/app/assets/images/dev_screenshots/geo.png")
+[screencap](https://raw.githubusercontent.com/openciti/dinesafe/master/app/assets/images/dev_screenshots/geo.png)
 
 Rake Tasks
 ---
