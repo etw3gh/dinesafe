@@ -97,7 +97,7 @@ class DinesafeGeo
                           :dist => dist.to_f,
                           :name => name).first_or_create
 
-        puts n.to_s.colorize(:light_blue) + " #{num} #{street} #{name} ".colorize(:yellow) + "#{lat} #{lng}".colorize(:blue)
+        puts n.to_s.colorize(:light_blue) + " #{num} #{street}".colorize(:orange) + " #{name} ".colorize(:yellow) + "#{lat} #{lng}".colorize(:blue)
         n += 1
       end
     end
