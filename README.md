@@ -14,6 +14,10 @@ Dinesafe XML to ActiveRecord parser
 ---
 https://github.com/openciti/dinesafe/blob/master/config/initializers/dinesafe_scraper.rb
 
+Rake Tasks
+---
+https://github.com/openciti/dinesafe/blob/master/lib/tasks/dinesafe_tasks.rake
+
 Usage
 ---
 
