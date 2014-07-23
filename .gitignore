@@ -25,3 +25,8 @@ secrets.yml
 *.shp.xml
 *.shx
 *.zip
+
+# contains twitter app secrets
+# http://rubydoc.info/gems/chatterbot/0.9.0/frames
+chatterbot.yml
+

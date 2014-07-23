@@ -1,27 +1,4 @@
 source 'https://rubygems.org'
-# for better server output to console in color
-gem 'colorize'
-
-# for web and xml parsing
-gem 'nokogiri'
-
-# for unzipping
-gem 'zipruby'
-
-# for cron tasks
-gem 'rufus-scheduler'
-
-# for file diff
-gem 'diffy'
-
-# for shapefile parsing
-gem 'dbf', '~>2.0.7'
-gem 'rgeo', '~>0.3.3'
-gem 'rgeo-shapefile', '~>0.2.3'
-
-
-# for pry in the rails console
-gem 'pry-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.2'
@@ -38,6 +15,7 @@ gem 'coffee-rails', '~> 4.0.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -60,3 +38,28 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+# for better server output to console in color
+gem 'colorize'
+
+# for web and xml parsing
+gem 'nokogiri'
+
+# for unzipping
+gem 'zipruby'
+
+# for cron tasks
+gem 'rufus-scheduler'
+
+# for file diff
+gem 'diffy'
+
+# for shapefile parsing
+gem 'dbf', '~>2.0.7'
+gem 'rgeo', '~>0.3.3'
+gem 'rgeo-shapefile', '~>0.2.3'
+
+# for twitter bot
+gem 'chatterbot'
+
+# for pry in the rails console
+gem 'pry-rails'

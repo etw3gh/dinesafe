@@ -31,9 +31,14 @@ namespace :dinesafe do
     end
   end
 
-  desc "Fills in missing latitude and longitude data in the Venue model"
+  desc "Populates the Address Model with geo data from a shape file"
   task :geo => :environment do
     geo = DinesafeGeo.new
     geo.parse
+  end
+
+  desc "Meshes the geo data in the Address model with the Venue model"
+  task :mesh => :environment do
+
   end
 end
