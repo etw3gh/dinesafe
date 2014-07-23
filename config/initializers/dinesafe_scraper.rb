@@ -83,8 +83,8 @@ class DinesafeScraper
                               version:  @timestamp
         )
         # only print out every 500th venue
-        puts "name: #{x.name}, RID: #{x.rid}, IID: #{x.iid}" #if n % 500 == 0
-      rescue ActiveRecord::RecordNotUnique => e
+        puts "name: #{x.name}, RID: #{x.rid}, IID: #{x.iid}" if n % 500 == 0
+      rescue ActiveRecord::RecordNotUnique
         puts "Dupe"
       end
 

@@ -64,7 +64,9 @@ class DinesafeGeo
       n = 0
       file.each do |record|
 
-        attributes = record.attributes.inspect
+        attributes = record.attributes
+        #puts attributes
+        #puts "  Geometry: #{record.geometry.as_text}"
 
         lat = attributes['LATITUDE']
         lng = attributes['LONGITUDE']
@@ -81,8 +83,8 @@ class DinesafeGeo
         name = attributes['NAME']
 
         a = Address.where(:shape_id => s.id,
-                          :lat => lat,
-                          :lng => lng,
+                          :lat => lat.to_f,
+                          :lng => lng.to_f,
                           :num => num,
                           :street => street,
                           :lonum => lonum,
@@ -92,7 +94,7 @@ class DinesafeGeo
                           :ward => ward,
                           :mun => mun,
                           :arc => arc,
-                          :dist => dist,
+                          :dist => dist.to_f,
                           :name => name).first_or_create
 
         puts n.to_s.colorize(:light_blue) + " #{num} #{street} #{name} ".colorize(:yellow) + "#{lat} #{lng}".colorize(:blue)
