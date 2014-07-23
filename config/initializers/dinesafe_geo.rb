@@ -60,6 +60,8 @@ class DinesafeGeo
     # Shapefile reader
     RGeo::Shapefile::Reader.open(most_recent_fullpath) do |file|
       puts "File contains #{file.num_records} records."
+
+      n = 0
       file.each do |record|
 
         attributes = record.attributes.inspect
@@ -93,7 +95,8 @@ class DinesafeGeo
                           :dist => dist,
                           :name => name).first_or_create
 
-        puts "#{num} #{street} #{name} #{lat} #{lng}"
+        puts n.to_s.colorize(:light_blue) + " #{num} #{street} #{name} ".colorize(:yellow) + "#{lat} #{lng}".colorize(:blue)
+        n += 1
       end
     end
   end

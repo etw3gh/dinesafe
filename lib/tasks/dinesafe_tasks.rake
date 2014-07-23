@@ -21,7 +21,6 @@ namespace :dinesafe do
     end
   end
 
-
   desc "Download the Shapefile from the city of Toronto"
   task :shapefile => :environment do
     geo = DinesafeGeo.new
@@ -31,7 +30,6 @@ namespace :dinesafe do
       puts 'Shapefile error. Not proceeding with geo function.'.colorize(:red)
     end
   end
-
 
   desc "Fills in missing latitude and longitude data in the Venue model"
   task :geo => :environment do
