@@ -36,7 +36,7 @@ class DinesafeScraper
   def parse
     # set up Nokogiri
 
-    return false if !@fresh && !InspectionEvent.last.nil?
+    return false if !@fresh && !Event.last.nil?
 
     xml_parser = Nokogiri::XML(File.open(@xml_file_path))
 
@@ -104,8 +104,7 @@ class DinesafeScraper
                       :action => action,
                       :outcome => outcome,
                       :fine => fine,
-                      :version => @timestamp
-      ).first_or_create
+                      :version => @timestamp).first_or_create
 
 
       n += 1

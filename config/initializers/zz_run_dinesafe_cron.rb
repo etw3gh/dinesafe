@@ -1,5 +1,5 @@
 scheduler = Rufus::Scheduler.new
-scheduler.every '1h' do
+scheduler.every '6h' do
   grabber = DinesafeGrabber.new
   grabber.grab
 end
