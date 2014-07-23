@@ -13,3 +13,9 @@ https://github.com/openciti/dinesafe/blob/master/config/initializers/dinesafe_sc
 Dinesafe XML to ActiveRecord parser
 ---
 https://github.com/openciti/dinesafe/blob/master/config/initializers/dinesafe_scraper.rb
+
+Usage
+---
+
+    rake dinesafe:grab dinesafe:parse
+    rails s
