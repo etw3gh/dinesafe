@@ -20,4 +20,22 @@ namespace :dinesafe do
       puts "There are no dinesafe archives to parse.\nTry running 'rake dinesafe:grab'"
     end
   end
+
+
+  desc "Download the Shapefile from the city of Toronto"
+  task :shapefile => :environment do
+    geo = DinesafeGeo.new
+    if geo
+      geo.grab
+    else
+      puts 'Shapefile error. Not proceeding with geo function.'.colorize(:red)
+    end
+  end
+
+
+  desc "Fills in missing latitude and longitude data in the Venue model"
+  task :geo => :environment do
+    geo = DinesafeGeo.new
+    geo.parse
+  end
 end
