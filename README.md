@@ -22,8 +22,8 @@ https://github.com/openciti/dinesafe/blob/master/config/initializers/dinesafe_sc
 ShapeFile grabber & parser
 ---
 https://github.com/openciti/dinesafe/blob/master/config/initializers/dinesafe_geo.rb
-
-[!Alt text](geo screencap https://raw.githubusercontent.com/openciti/dinesafe/master/app/assets/images/dev_screenshots/geo.png)
+![Alt text](wfs25.jpg "wfs.jpg")
+[!Alt text](geo screencap "app/assets/images/dev_screenshots/geo.png")
 
 Rake Tasks
 ---
