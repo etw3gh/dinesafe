@@ -30,12 +30,11 @@ class DinesafeGeo
         puts 'Archive failed integrity test'.colorize(:red)
         return false
       end
-    end
       true
     else
       puts 'Error downloading shapefile archive'.colorize(:red)
       false
-    endre
+    end
   end
 
   def parse

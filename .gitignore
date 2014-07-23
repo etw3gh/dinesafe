@@ -17,3 +17,5 @@
 
 *_dinesafe.xml
 secrets.yml
+
+/app/assets/shapefiles/*
