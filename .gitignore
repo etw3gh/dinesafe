@@ -17,5 +17,11 @@
 
 *_dinesafe.xml
 secrets.yml
-
+/app/assets/shapefiles
 /app/assets/shapefiles/*
+*.dbf
+*.prj
+*.shp
+*.shp.xml
+*.shx
+*.zip
