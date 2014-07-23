@@ -49,19 +49,52 @@ class DinesafeGeo
       shapefile_dirs.push(d.to_i)
     end
 
-    most_recent_directory = shapefile_dirs.zip.max[0].to_s
+    timestamp = shapefile_dirs.zip.max[0]
+    most_recent_directory = timestamp.to_s
     most_recent_fullpath = File.join(path, most_recent_directory, shapefile)
 
-    # Shapefile reader
 
+    # set the shape model up
+    s = Shape.where(:timestamp => timestamp, :region => 'Toronto').first_or_create
+
+    # Shapefile reader
     RGeo::Shapefile::Reader.open(most_recent_fullpath) do |file|
       puts "File contains #{file.num_records} records."
       file.each do |record|
-        puts record.attributes.inspect
-        puts '-' * `tput cols`.to_i
+
+        attributes = record.attributes.inspect
+
+        lat = attributes['LATITUDE']
+        lng = attributes['LONGITUDE']
+        num = attributes['ADDRESS']
+        street = attributes['LFNAME']
+        lonum = attributes['LONUM']
+        lonumsuf = attributes['LONUMSUF']
+        hinum = attributes['HINUM']
+        hinumsuf = attributes['HINUMSUF']
+        ward = attributes['WARD_NAME']
+        mun = attributes['MUN_NAME']
+        dist = attributes['DISTANCE']
+        arc = attributes['ARC_SIDE']
+        name = attributes['NAME']
+
+        a = Address.where(:shape_id => s.id,
+                          :lat => lat,
+                          :lng => lng,
+                          :num => num,
+                          :street => street,
+                          :lonum => lonum,
+                          :lonumsuf => lonumsuf,
+                          :hinum => hinum,
+                          :hinumsuf => hinumsuf,
+                          :ward => ward,
+                          :mun => mun,
+                          :arc => arc,
+                          :dist => dist,
+                          :name => name).first_or_create
+
+        puts "#{num} #{street} #{name} #{lat} #{lng}"
       end
-
     end
-
   end
 end

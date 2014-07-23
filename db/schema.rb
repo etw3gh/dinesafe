@@ -11,10 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140722000000) do
+ActiveRecord::Schema.define(version: 20140723000001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "addresses", force: true do |t|
+    t.integer  "shape_id"
+    t.float    "lat"
+    t.float    "lng"
+    t.string   "num"
+    t.string   "street"
+    t.string   "ward"
+    t.string   "mun"
+    t.string   "arc"
+    t.float    "dist"
+    t.string   "lonum"
+    t.string   "lonumsuf"
+    t.string   "hinum"
+    t.string   "hinumsuf"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
+  add_index "addresses", ["street"], name: "index_addresses_on_street", using: :btree
 
   create_table "archives", force: true do |t|
     t.integer  "timestamp",  null: false
@@ -66,6 +87,15 @@ ActiveRecord::Schema.define(version: 20140722000000) do
   end
 
   add_index "inspections", ["iid"], name: "index_inspections_on_iid", using: :btree
+
+  create_table "shapes", force: true do |t|
+    t.integer  "timestamp",  null: false
+    t.string   "region"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shapes", ["timestamp"], name: "index_shapes_on_timestamp", unique: true, using: :btree
 
   create_table "venues", force: true do |t|
     t.integer  "eid"
