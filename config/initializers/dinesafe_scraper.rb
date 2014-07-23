@@ -25,14 +25,19 @@
 # rows start at 1
 
 class DinesafeScraper
-  attr_accessor :xml_file_path
+  attr_accessor :xml_file_path, :fresh
 
   def initialize(archive)
     @xml_file_path = archive.fullpath
+    @fresh = archive.fresh
+    @timestamp = archive.timestamp
   end
 
   def parse
     # set up Nokogiri
+
+    return false if !@fresh && !InspectionEvent.last.nil?
+
     xml_parser = Nokogiri::XML(File.open(@xml_file_path))
 
     # splits the xml file into single inspection chunks (see top of file)
@@ -42,23 +47,66 @@ class DinesafeScraper
     n = 0
 
     i.each_with_index do |row|
-      x = Inspection.create(rid:      row.xpath('ROW_ID').text.to_i,
-                            eid:      row.xpath('ESTABLISHMENT_ID').text.to_i,
-                            iid:      row.xpath('INSPECTION_ID').text.to_i,
-                            name:     row.xpath('ESTABLISHMENT_NAME').text,
-                            etype:    row.xpath('ESTABLISHMENTTYPE').text,
-                            status:   row.xpath('ESTABLISHMENT_STATUS').text,
-                            details:  row.xpath('INFRACTION_DETAILS').text,
-                            date:     row.xpath('INSPECTION_DATE').text,
-                            severity: row.xpath('SEVERITY').text,
-                            action:   row.xpath('ACTION').text,
-                            outcome:  row.xpath('COURT_OUTCOME').text,
-                            fine:     row.xpath('AMOUNT_FINED').text,
-                            address:  row.xpath('ESTABLISHMENT_ADDRESS').text,
-                            mipy:     row.xpath('MINIMUM_INSPECTIONS_PERYEAR').text.to_i
-      )
-      # only print out every 500th venue
-      puts "name: #{x.name}, RID: #{x.rid}, IID: #{x.iid}" if n % 500 == 0
+
+      rid =      row.xpath('ROW_ID').text.to_i
+      eid =      row.xpath('ESTABLISHMENT_ID').text.to_i
+      iid =      row.xpath('INSPECTION_ID').text.to_i
+      name =     row.xpath('ESTABLISHMENT_NAME').text.strip.split.join(' ')
+      etype =    row.xpath('ESTABLISHMENTTYPE').text.strip.split.join(' ')
+      status =   row.xpath('ESTABLISHMENT_STATUS').text.strip.split.join(' ')
+      details =  row.xpath('INFRACTION_DETAILS').text.strip.split.join(' ')
+      date =     row.xpath('INSPECTION_DATE').text.strip.split.join(' ')
+      severity = row.xpath('SEVERITY').text.strip.split.join(' ')
+      action =   row.xpath('ACTION').text.strip.split.join(' ')
+      outcome =  row.xpath('COURT_OUTCOME').text
+      fine =     row.xpath('AMOUNT_FINED').text
+      address =  row.xpath('ESTABLISHMENT_ADDRESS').text.strip.split.join(' ')
+      mipy =     row.xpath('MINIMUM_INSPECTIONS_PERYEAR').text.to_i
+
+      begin
+        x = Inspection.create(rid:      rid,
+                              eid:      eid,
+                              iid:      iid,
+                              name:     name,
+                              etype:    etype,
+                              status:   status,
+                              details:  details,
+                              date:     date,
+                              severity: severity,
+                              action:   action,
+                              outcome:  outcome,
+                              fine:     fine,
+                              address:  address,
+                              mipy:     mipy,
+                              version:  @timestamp
+        )
+        # only print out every 500th venue
+        puts "name: #{x.name}, RID: #{x.rid}, IID: #{x.iid}" #if n % 500 == 0
+      rescue ActiveRecord::RecordNotUnique => e
+        puts "Dupe"
+       # next
+      end
+
+      v = Venue.where(:eid => eid,
+                      :name => name,
+                      :address => address,
+                      :etype => etype,
+                      :lat => nil,
+                      :lng => nil,
+                      :mipy => mipy).first_or_create
+
+      i = Event.where(:iid => iid,
+                      :venue_id => v.id,
+                      :status => status,
+                      :details => details,
+                      :date => date,
+                      :severity => severity,
+                      :action => action,
+                      :outcome => outcome,
+                      :fine => fine,
+                      :version => @timestamp
+      ).first_or_create
+
 
       n += 1
     end

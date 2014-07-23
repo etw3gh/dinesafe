@@ -15,6 +15,7 @@ class CreateInspections < ActiveRecord::Migration
       t.string :fine
       t.string :address
       t.integer :mipy
+      t.integer :version
     end
     add_index :inspections, :iid
   end
