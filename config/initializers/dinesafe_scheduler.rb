@@ -17,8 +17,8 @@ class DinesafeGrabber
     # output file
     dinesafe_xml = File.open(fullpath, 'w')
 
-    puts 'Dinesafe archive scheduled task...'
-    puts 'Downloading zip file...'
+    puts 'Dinesafe archive scheduled task...'.colorize(:green)
+    puts 'Downloading zip file...'.colorize(:green)
 
     zip_stream = Net::HTTP.post_form(URI.parse(dinesafe_zip_url), params).body
 
