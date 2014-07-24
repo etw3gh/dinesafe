@@ -48,7 +48,7 @@ class DinesafeScraper
       second_last = sorted[-2]
       second_last_file = File.join(aq[:path], second_last, aq[:dinesafe])
 
-      diff = Diffy::Diff.new(second_last, @xml_file_path, :source => 'files').diff
+      diff = Diffy::Diff.new(second_last_file, @xml_file_path, :source => 'files').diff
       if diff.nil? || diff.empty?
         @fresh = false
       else
@@ -65,6 +65,7 @@ class DinesafeScraper
   def parse
 
     return false unless Event.where(:version => @timestamp) == 0
+    return false unless @fresh
 
     # set up Nokogiri
 
