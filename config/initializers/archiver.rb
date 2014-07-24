@@ -102,6 +102,10 @@ class Archiver
 
   end
 
+  def most_recent
+
+  end
+
 
   # for convenience and utility - DRY
   def do_and_print

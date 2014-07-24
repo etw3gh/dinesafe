@@ -10,9 +10,9 @@ Licence
 Contains information licensed under the Open Government Licence – Toronto.
 http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=4a37e03bb8d1e310VgnVCM10000071d60f89RCRD
 
-Dinesafe archive grabber
+Archive grabber
 ---
-https://github.com/openciti/dinesafe/blob/master/config/initializers/dinesafe_scheduler.rb
+https://github.com/openciti/dinesafe/blob/master/config/initializers/archiver.rb
 
 
 Dinesafe XML to ActiveRecord parser

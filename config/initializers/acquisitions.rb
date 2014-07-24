@@ -13,6 +13,7 @@ class Acquisitions
 
     @dinesafe = {url: 'http://opendata.toronto.ca/public.health/dinesafe/dinesafe.zip',
                 path: 'app/assets/dinesafe',
+                dinesafe: 'dinesafe.xml',
                 archive: 'app/assets/dinesafe/archives',
                 category: 'dinesafe',
                 region: 'Toronto',

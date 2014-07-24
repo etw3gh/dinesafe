@@ -6,18 +6,7 @@ namespace :dinesafe do
 
   desc "Parses the xml archive and puts it into the database with ActiveRecord"
   task :parse => :environment do
-    latest_dinesafe = Archive.where(:category => 'dinesafe').last
-    if !latest_dinesafe.nil?
-      parser = DinesafeScraper.new(latest_dinesafe)
-      if !parser
-        puts 'Archive is not fresh. No parsing will be performed'
-      else
-        puts parser.to_s
-        parser.parse
-      end
-    else
-      puts "There are no dinesafe archives to parse.\nTry running 'rake dinesafe:grab'"
-    end
+   puts DinesafeScraper.new.parse ? 'Finished parsing'.colorize(:green) : 'Archived previously parsed or not fresh'.colorize(:red)
   end
 
   desc "Download the Shapefile from the city of Toronto"

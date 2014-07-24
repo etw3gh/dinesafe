@@ -27,18 +27,46 @@
 # The Inspection model is being kept while the Venue & Event models are being tested over a longer term
 
 class DinesafeScraper
-  attr_accessor :xml_file_path, :fresh
+  attr_accessor :xml_file_path, :timestamp, :fresh
 
-  def initialize(archive)
-    @xml_file_path = archive.zip
-    @fresh = archive.fresh
-    @timestamp = archive.timestamp
+  def initialize
+    aq = Acquisitions.new.dinesafe
+    dinesafe_timestamps = Array.new
+    # determine most recent directory by timestamp which is the dir name
+    Dir.entries(aq[:archive]).each do |d|
+      dinesafe_timestamps.push(d.split('_')[0].to_i) unless d[0] == '.'
+    end
+
+    sorted = dinesafe_timestamps.sort
+
+    @timestamp = sorted[-1]
+    most_recent_directory = @timestamp.to_s
+    @xml_file_path = File.join(aq[:path], most_recent_directory, aq[:dinesafe])
+
+
+    if sorted.count >= 2
+      second_last = sorted[-2]
+      second_last_file = File.join(aq[:path], second_last, aq[:dinesafe])
+
+      diff = Diffy::Diff.new(second_last, @xml_file_path, :source => 'files').diff
+      if diff.nil? || diff.empty?
+        @fresh = false
+      else
+        @fresh = true
+      end
+
+    else
+      @fresh = true
+    end
+
+
   end
 
   def parse
-    # set up Nokogiri
 
-    return false if !@fresh && !Event.last.nil?
+    return false unless Event.where(:version => @timestamp) == 0
+
+    # set up Nokogiri
 
     xml_parser = Nokogiri::XML(File.open(@xml_file_path))
 
@@ -83,7 +111,7 @@ class DinesafeScraper
                               version:  @timestamp
         )
         # only print out every 500th venue
-        puts "name: #{x.name}, RID: #{x.rid}, IID: #{x.iid}" if n % 500 == 0
+
       rescue ActiveRecord::RecordNotUnique
         puts "Dupe"
       end
@@ -106,8 +134,14 @@ class DinesafeScraper
                       :outcome => outcome,
                       :fine => fine).first_or_create(version: @timestamp)
 
+      nb = v.name.colorize(:blue)
+      ib = i.iid.to_s.colorize(:blue)
+      eb = v.eid.to_s.colorize(:blue)
+
+      puts "#{n.to_s} ".colorize(:green) + "name:#{nb}, EID: #{eb}, IID: #{ib}" if n % 500 == 0
 
       n += 1
     end
+    true
   end
 end
