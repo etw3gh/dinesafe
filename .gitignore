@@ -14,7 +14,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
-
+dinesafe.xml
 *_dinesafe.xml
 secrets.yml
 /app/assets/shapefiles
