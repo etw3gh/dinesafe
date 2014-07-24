@@ -50,7 +50,7 @@ class DinesafeGrabber
                              region: 'Toronto',
                              subregion: nil,
                              fresh: latest)
-    puts "Archive result: #{archive.timestamp}, #{archive.fullpath}" if !archive.nil?
+    puts "Archive result: #{archive.timestamp}, #{archive.fullpath}" unless archive.nil?
 
 
   end

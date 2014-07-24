@@ -40,9 +40,12 @@ ActiveRecord::Schema.define(version: 20140723000001) do
   create_table "archives", force: true do |t|
     t.integer  "timestamp",  null: false
     t.string   "filename"
-    t.string   "fullpath"
+    t.string   "zip"
+    t.string   "data"
     t.string   "region"
     t.string   "subregion"
+    t.string   "category"
+    t.integer  "filecount"
     t.boolean  "fresh"
     t.datetime "created_at"
     t.datetime "updated_at"

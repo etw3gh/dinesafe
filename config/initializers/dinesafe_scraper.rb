@@ -30,7 +30,7 @@ class DinesafeScraper
   attr_accessor :xml_file_path, :fresh
 
   def initialize(archive)
-    @xml_file_path = archive.fullpath
+    @xml_file_path = archive.zip
     @fresh = archive.fresh
     @timestamp = archive.timestamp
   end
@@ -64,7 +64,7 @@ class DinesafeScraper
       fine =     row.xpath('AMOUNT_FINED').text
       address =  row.xpath('ESTABLISHMENT_ADDRESS').text.strip.split.join(' ')
       mipy =     row.xpath('MINIMUM_INSPECTIONS_PERYEAR').text.to_i
-
+=begin
       begin
         x = Inspection.create(rid:      rid,
                               eid:      eid,
@@ -87,7 +87,7 @@ class DinesafeScraper
       rescue ActiveRecord::RecordNotUnique
         puts "Dupe"
       end
-
+=end
       v = Venue.where(:eid => eid,
                       :name => name,
                       :address => address,
@@ -104,8 +104,7 @@ class DinesafeScraper
                       :severity => severity,
                       :action => action,
                       :outcome => outcome,
-                      :fine => fine,
-                      :version => @timestamp).first_or_create
+                      :fine => fine).first_or_create(version: @timestamp)
 
 
       n += 1

@@ -1,13 +1,12 @@
 namespace :dinesafe do
   desc "Tasks to downloads and unzips dinesafe.xml archive"
   task :grab => :environment do
-    grabber = DinesafeGrabber.new
-    grabber.grab
+    Archiver.new(Acquisitions.new.dinesafe).do_and_print
   end
 
   desc "Parses the xml archive and puts it into the database with ActiveRecord"
   task :parse => :environment do
-    latest_dinesafe = Archive.last
+    latest_dinesafe = Archive.where(:category => 'dinesafe').last
     if !latest_dinesafe.nil?
       parser = DinesafeScraper.new(latest_dinesafe)
       if !parser
@@ -22,13 +21,8 @@ namespace :dinesafe do
   end
 
   desc "Download the Shapefile from the city of Toronto"
-  task :shapefile => :environment do
-    geo = DinesafeGeo.new
-    if geo
-      geo.grab
-    else
-      puts 'Shapefile error. Not proceeding with geo function.'.colorize(:red)
-    end
+  task :grabshape => :environment do
+    Archiver.new(Acquisitions.new.shapefiles).do_and_print
   end
 
   desc "Populates the Address Model with geo data from a shape file"
@@ -41,4 +35,5 @@ namespace :dinesafe do
   task :mesh => :environment do
 
   end
+
 end
