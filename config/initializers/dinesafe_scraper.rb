@@ -64,8 +64,7 @@ class DinesafeScraper
 
   def parse
 
-    return false unless Event.where(:version => @timestamp) == 0
-    return false unless @fresh
+    return false unless Event.where(:version => @timestamp) == 0 && @fresh
 
     # set up Nokogiri
 
