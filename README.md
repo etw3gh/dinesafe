@@ -15,11 +15,11 @@ Archive grabber
 https://github.com/openciti/dinesafe/blob/master/config/initializers/archiver.rb
 
 
-Dinesafe XML to ActiveRecord parser
+Dinesafe XML scraper
 ---
 https://github.com/openciti/dinesafe/blob/master/config/initializers/dinesafe_scraper.rb
 
-ShapeFile grabber & parser
+ShapeFile scraper
 ---
 https://github.com/openciti/dinesafe/blob/master/config/initializers/dinesafe_geo.rb
 
@@ -32,5 +32,5 @@ https://github.com/openciti/dinesafe/blob/master/lib/tasks/dinesafe_tasks.rake
 Usage
 ---
 
-    rake dinesafe:grab dinesafe:parse dinesafe:shapefile dinesafe:geo
+    rake dinesafe:grab dinesafe:parse dinesafe:grabshapefile dinesafe:geo
     rails s

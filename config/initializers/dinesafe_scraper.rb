@@ -43,7 +43,6 @@ class DinesafeScraper
     most_recent_directory = @timestamp.to_s
     @xml_file_path = File.join(aq[:path], most_recent_directory, aq[:dinesafe])
 
-
     if sorted.count >= 2
       second_last = sorted[-2]
       second_last_file = File.join(aq[:path], second_last, aq[:dinesafe])
@@ -58,7 +57,6 @@ class DinesafeScraper
     else
       @fresh = true
     end
-
 
   end
 
