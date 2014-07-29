@@ -1,15 +1,10 @@
 class DinesafeGeo
-
   def parse
     aq = Acquisitions.new.shapefiles
-    shapefile_timestamps = Array.new
+    ignore_fresh, timestamp = ArchiveDirectory.new(aq).is_new
 
-    # determine most recent directory by timestamp which is the dir name
-    Dir.entries(aq[:archive]).each do |d|
-      shapefile_timestamps.push(d.split('_')[0].to_i) unless d[0] == '.'
-    end
+    return false if timestamp.nil?
 
-    timestamp = shapefile_timestamps.zip.max[0]
     most_recent_directory = timestamp.to_s
     most_recent_fullpath = File.join(aq[:path], most_recent_directory, aq[:shapefile])
 
@@ -18,9 +13,9 @@ class DinesafeGeo
 
     # Shapefile reader
     RGeo::Shapefile::Reader.open(most_recent_fullpath) do |file|
-      puts "\nFile contains #{file.num_records} records.".colorize(:orange)
+      n = file.num_records
+      puts "\nFile contains #{n} records.".colorize(:orange)
 
-      n = 0
       file.each do |record|
 
         attributes = record.attributes
@@ -57,7 +52,7 @@ class DinesafeGeo
                           :name => name).first_or_create
 
         puts n.to_s.colorize(:light_blue) + " #{num} #{street}".colorize(:orange) + " #{name} ".colorize(:yellow) + "#{lat} #{lng}".colorize(:blue)
-        n += 1
+        n -= 1
       end
     end
   end
