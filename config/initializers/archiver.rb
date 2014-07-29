@@ -1,45 +1,35 @@
 class Archiver
 
-  attr_accessor :url, :timestamp, :file_home, :timestamped_dir, :archive_home, :archive_fullpath, :file_name_base, :a
+  attr_reader :timestamp, :timestamped_dir, :archive_fullpath, :a, :file_name_base
 
   # requires an hash defined in Acquisitions
   def initialize(acquisition)
 
     @a = acquisition
 
-    # complete url including filename
-    @url = acquisition[:url]
-
     # directories will be named after this timestamp
     # zip archives will be prepened with timestamp_
     @timestamp = Time.now.to_i.to_s
 
-    # this is the filepath, usually app/assets/some_path_here
-    @file_home = acquisition[:path]
-
-    # this is the filepath for the archive (zips)
-    @archive_home = acquisition[:archive]
-
-    @timestamped_dir = File.join(file_home, @timestamp)
+    @timestamped_dir = File.join(@a[:path], @timestamp)
 
     # takes whatever comes after the last / in the url, this should be the filename
-    @file_name_base = url.split('/').last
+    @file_name_base = @a[:url].split('/').last
 
     @filename = @timestamp + '_' + @file_name_base
-    #@fullpath = File.join(file_home, @filename)
-    @archive_fullpath = File.join(archive_home, @filename)
+    @archive_fullpath = File.join(@a[:archive], @filename)
 
     # ensure the asset directory (file_home) exists
-    Dir.mkdir(file_home) unless Dir.exists?(file_home)
+    Dir.mkdir(@a[:path]) unless Dir.exists?(@a[:path])
 
     # ensure the archive directory (archive_home) exists
-    Dir.mkdir(archive_home) unless Dir.exists?(archive_home)
+    Dir.mkdir(@a[:archive]) unless Dir.exists?(@a[:archive])
   end
 
   def grab
     # ensure timestamped directory exists
     Dir.mkdir(@timestamped_dir) unless Dir.exists?(@timestamped_dir)
-    system("wget #{@url} -O #{@archive_fullpath}")
+    system("wget #{@a[:url]} -O #{@archive_fullpath}")
     $?.exitstatus == 0 ? true : false
   end
 
@@ -56,7 +46,7 @@ class Archiver
 
   def populate
     archives = Array.new
-    Dir.entries(@archive_home).each do |f|
+    Dir.entries(@a[:archive]).each do |f|
 
       n = 0
       # exclude "." and ".."
@@ -66,10 +56,10 @@ class Archiver
 
         archive_time_stamp = f.split('_')[0]
 
-        data_dir = Dir.entries(File.join(@file_home, archive_time_stamp))
+        data_dir = Dir.entries(File.join(@a[:path], archive_time_stamp))
         extracted_files = data_dir.count - 2
 
-        zip_full_path = File.join(@archive_home, f)
+        zip_full_path = File.join(@a[:archive], f)
 
         # Archive has primary_key set to timestamp
 
