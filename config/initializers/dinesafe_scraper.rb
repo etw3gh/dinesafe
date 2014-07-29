@@ -44,7 +44,7 @@ class DinesafeScraper
     @xml_file_path = File.join(aq[:path], most_recent_directory, aq[:dinesafe])
 
     if sorted.count >= 2
-      second_last = sorted[-2]
+      second_last = sorted[-2].to_s
       second_last_file = File.join(aq[:path], second_last, aq[:dinesafe])
 
       diff = Diffy::Diff.new(second_last_file, @xml_file_path, :source => 'files').diff
@@ -62,7 +62,7 @@ class DinesafeScraper
 
   def parse
 
-    return false unless Event.where(:version => @timestamp) == 0 && @fresh
+    return false unless Event.where(:version => @timestamp).count == 0 && @fresh
 
     # set up Nokogiri
 

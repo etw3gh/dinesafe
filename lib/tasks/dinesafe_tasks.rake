@@ -24,5 +24,4 @@ namespace :dinesafe do
   task :mesh => :environment do
 
   end
-
 end
