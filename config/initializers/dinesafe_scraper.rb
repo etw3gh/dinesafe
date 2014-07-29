@@ -27,37 +27,11 @@
 # The Inspection model is being kept while the Venue & Event models are being tested over a longer term
 
 class DinesafeScraper
-  attr_accessor :xml_file_path, :timestamp, :fresh
+  attr_reader :timestamp, :fresh, :aq
 
   def initialize
-    aq = Acquisitions.new.dinesafe
-    dinesafe_timestamps = Array.new
-    # determine most recent directory by timestamp which is the dir name
-    Dir.entries(aq[:archive]).each do |d|
-      dinesafe_timestamps.push(d.split('_')[0].to_i) unless d[0] == '.'
-    end
-
-    sorted = dinesafe_timestamps.sort
-
-    @timestamp = sorted[-1]
-    most_recent_directory = @timestamp.to_s
-    @xml_file_path = File.join(aq[:path], most_recent_directory, aq[:dinesafe])
-
-    if sorted.count >= 2
-      second_last = sorted[-2].to_s
-      second_last_file = File.join(aq[:path], second_last, aq[:dinesafe])
-
-      diff = Diffy::Diff.new(second_last_file, @xml_file_path, :source => 'files').diff
-      if diff.nil? || diff.empty?
-        @fresh = false
-      else
-        @fresh = true
-      end
-
-    else
-      @fresh = true
-    end
-
+    @aq = Acquisitions.new.dinesafe
+    @fresh, @timestamp = ArchiveDirectory.new(@aq).is_new
   end
 
   def parse
@@ -66,7 +40,11 @@ class DinesafeScraper
 
     # set up Nokogiri
 
-    xml_parser = Nokogiri::XML(File.open(@xml_file_path))
+    # reconstruct the filepath given the timestamp as all archive directories have the same structure
+   
+    xml_file_path = File.join(@aq[:path], @timestamp, @aq[:dinesafe]) 
+
+    xml_parser = Nokogiri::XML(File.open(xml_file_path))
 
     # splits the xml file into single inspection chunks (see top of file)
     i = xml_parser.css('ROWDATA ROW')
