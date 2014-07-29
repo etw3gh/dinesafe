@@ -23,15 +23,14 @@ class ArchiveDirectory
       timestamps.push(d.split('_')[0].to_i) unless d[0] == '.'
     end
     
+    sorted = timestamps.sort
     timestamp = sorted[-1]
+
     most_recent_file = timestamp.to_s
     most_recent_file_path = File.join(aq[:path], most_recent_file, @aq[archive_file])
 
-    sorted = timestamps.sort
     if sorted.count >= 2
-
       archive_file = @aq[:category].to_sym
-
       second_last_file = sorted[-2].to_s
       second_last_file_path = File.join(aq[:path], second_last_file, @aq[archive_file])
 
