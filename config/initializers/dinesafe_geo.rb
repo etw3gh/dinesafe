@@ -6,20 +6,16 @@ class DinesafeGeo
     @fresh, @timestamp = ArchiveDirectory.new(@aq).is_new
   end
 
-  def most_recent_directory
-    timestamp.to_s
-  end
-
   def most_recent_fullpath
-    File.join(aq[:path], most_recent_directory, aq[:shapefile])
+    File.join(aq[:path], timestamp.to_s, aq[:shapefile])
   end
 
   def parse
-    return false if @timestamp.nil?
-    return false unless Shape.where(:timestamp => @timestamp).count == 0 && @fresh
+    return false if timestamp.nil?
+    return false unless Shape.where(:timestamp => timestamp).count == 0 && fresh
 
     # set the shape model up
-    s = Shape.where(:timestamp => @timestamp, :region => 'Toronto').first_or_create
+    s = Shape.where(:timestamp => timestamp, :region => 'Toronto').first_or_create
 
     # Shapefile reader
     RGeo::Shapefile::Reader.open(most_recent_fullpath) do |file|

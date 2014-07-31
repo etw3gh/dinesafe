@@ -6,7 +6,7 @@ namespace :dinesafe do
 
   desc "Parses the xml archive and puts it into the database with ActiveRecord"
   task :parse => :environment do
-   puts DinesafeScraper.new.parse ? 'Finished parsing'.colorize(:green) : 'Archived previously parsed or not fresh'.colorize(:red)
+   puts DinesafeScraper.new.parse ? 'Finished parsing dinesafe'.colorize(:green) : 'Dinesafe archived previously parsed or not fresh'.colorize(:red)
   end
 
   desc "Download the Shapefile from the city of Toronto"
@@ -16,7 +16,7 @@ namespace :dinesafe do
 
   desc "Populates the Address Model with geo data from a shape file"
   task :geo => :environment do
-    puts DinesafeGeo.new.parse ? 'Finished parsing'.colorize(:green) : 'Archived previously parsed or not fresh'.colorize(:red)
+    puts DinesafeGeo.new.parse ? 'Finished parsing shapefile'.colorize(:green) : 'Shapefile archived previously parsed or not fresh'.colorize(:red)
   end
 
   desc "Meshes the geo data in the Address model with the Venue model"

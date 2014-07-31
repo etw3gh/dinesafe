@@ -15,24 +15,24 @@ class Archiver
   end
 
   def timestamped_dir
-    File.join(@a[:path], @timestamp)
+    File.join(a[:path], timestamp)
   end
 
   def file_name_base
-    @a[:url].split('/').last
+    a[:url].split('/').last
   end
 
   def filename
-    @timestamp + '_' + file_name_base
+    timestamp + '_' + file_name_base
   end
 
   def archive_fullpath
-    File.join(@a[:archive], filename)
+    File.join(a[:archive], filename)
   end
 
   def grab
     self.ensure_dir(timestamped_dir)
-    system("wget #{@a[:url]} -O #{archive_fullpath}")
+    system("wget #{a[:url]} -O #{archive_fullpath}")
     $?.exitstatus == 0 ? true : false
   end
 
@@ -47,7 +47,7 @@ class Archiver
   end
 
   def populate
-    Dir.entries(@a[:archive]).each do |f|
+    Dir.entries(a[:archive]).each do |f|
 
       n = 0
       # exclude "." and ".."
@@ -57,10 +57,10 @@ class Archiver
 
         archive_time_stamp = f.split('_')[0]
 
-        data_dir = Dir.entries(File.join(@a[:path], archive_time_stamp))
+        data_dir = Dir.entries(File.join(a[:path], archive_time_stamp))
         extracted_files = data_dir.count - 2
 
-        zip_full_path = File.join(@a[:archive], f)
+        zip_full_path = File.join(a[:archive], f)
 
         # Archive has primary_key set to timestamp
 
@@ -79,9 +79,9 @@ class Archiver
                                  :zip => zip_full_path,
                                  :data => data_dir,
                                  :filecount => extracted_files,
-                                 :region => @a[:region],
-                                 :subregion =>  @a[:subregion],
-                                 :category => @a[:category],
+                                 :region => a[:region],
+                                 :subregion =>  a[:subregion],
+                                 :category => a[:category],
                                  :fresh => latest).first_or_create
 
         puts "Archive result: #{archive.timestamp}, #{archive.zip}" unless archive.nil?

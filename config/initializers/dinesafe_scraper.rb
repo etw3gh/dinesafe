@@ -30,12 +30,12 @@ class DinesafeScraper
   end
 
   def xml_file_path
-    File.join(@aq[:path], @timestamp, @aq[:dinesafe])
+    File.join(aq[:path], timestamp, aq[:dinesafe])
   end
 
   def parse
-    return false if @timestamp.nil?
-    return false unless Event.where(:version => @timestamp).count == 0 && @fresh
+    return false if timestamp.nil?
+    return false unless Event.where(:version => timestamp).count == 0 && fresh
 
     # splits the xml file into single inspection chunks (see top of file)
     i = Nokogiri::XML(File.open(xml_file_path)).css('ROWDATA ROW')
@@ -77,7 +77,7 @@ class DinesafeScraper
                       :severity => severity,
                       :action => action,
                       :outcome => outcome,
-                      :fine => fine).first_or_create(version: @timestamp)
+                      :fine => fine).first_or_create(version: timestamp)
 
       nb = v.name.colorize(:blue)
       ib = i.iid.to_s.colorize(:blue)
