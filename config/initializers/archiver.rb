@@ -31,8 +31,6 @@ class Archiver
   end
 
   def grab
-    # ensure timestamped directory exists
-    #Dir.mkdir(timestamped_dir) unless Dir.exists?(timestamped_dir)
     self.ensure_dir(timestamped_dir)
     system("wget #{@a[:url]} -O #{archive_fullpath}")
     $?.exitstatus == 0 ? true : false
@@ -48,9 +46,7 @@ class Archiver
     $?.exitstatus == 0 ? true : false
   end
 
-
   def populate
-    archives = Array.new
     Dir.entries(@a[:archive]).each do |f|
 
       n = 0

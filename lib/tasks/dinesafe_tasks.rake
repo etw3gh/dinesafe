@@ -16,8 +16,7 @@ namespace :dinesafe do
 
   desc "Populates the Address Model with geo data from a shape file"
   task :geo => :environment do
-    geo = DinesafeGeo.new
-    geo.parse
+    puts DinesafeGeo.new.parse ? 'Finished parsing'.colorize(:green) : 'Archived previously parsed or not fresh'.colorize(:red)
   end
 
   desc "Meshes the geo data in the Address model with the Venue model"

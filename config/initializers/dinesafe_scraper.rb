@@ -1,5 +1,4 @@
 =begin
-
   <ROWDATA>
   ...
     <ROW>
@@ -22,10 +21,6 @@
   </ROWDATA>
 =end
 
-# rows start at 1
-
-# The Inspection model is being kept while the Venue & Event models are being tested over a longer term
-
 class DinesafeScraper
   attr_reader :timestamp, :fresh, :aq
 
@@ -34,27 +29,24 @@ class DinesafeScraper
     @fresh, @timestamp = ArchiveDirectory.new(@aq).is_new
   end
 
-  def parse
+  def xml_file_path
+    File.join(@aq[:path], @timestamp, @aq[:dinesafe])
+  end
 
+  def parse
+    return false if @timestamp.nil?
     return false unless Event.where(:version => @timestamp).count == 0 && @fresh
 
-    # set up Nokogiri
-
-    # reconstruct the filepath given the timestamp as all archive directories have the same structure
-   
-    xml_file_path = File.join(@aq[:path], @timestamp, @aq[:dinesafe]) 
-
-    xml_parser = Nokogiri::XML(File.open(xml_file_path))
-
     # splits the xml file into single inspection chunks (see top of file)
-    i = xml_parser.css('ROWDATA ROW')
+    i = Nokogiri::XML(File.open(xml_file_path)).css('ROWDATA ROW')
 
     # counter for output
-    n = 0
+    # rows start at 1
+    n = 1
 
     i.each_with_index do |row|
 
-      rid =      row.xpath('ROW_ID').text.to_i
+      #rid =      row.xpath('ROW_ID').text.to_i
       eid =      row.xpath('ESTABLISHMENT_ID').text.to_i
       iid =      row.xpath('INSPECTION_ID').text.to_i
       name =     row.xpath('ESTABLISHMENT_NAME').text.strip.split.join(' ')
@@ -68,30 +60,7 @@ class DinesafeScraper
       fine =     row.xpath('AMOUNT_FINED').text
       address =  row.xpath('ESTABLISHMENT_ADDRESS').text.strip.split.join(' ')
       mipy =     row.xpath('MINIMUM_INSPECTIONS_PERYEAR').text.to_i
-=begin
-      begin
-        x = Inspection.create(rid:      rid,
-                              eid:      eid,
-                              iid:      iid,
-                              name:     name,
-                              etype:    etype,
-                              status:   status,
-                              details:  details,
-                              date:     date,
-                              severity: severity,
-                              action:   action,
-                              outcome:  outcome,
-                              fine:     fine,
-                              address:  address,
-                              mipy:     mipy,
-                              version:  @timestamp
-        )
-        # only print out every 500th venue
 
-      rescue ActiveRecord::RecordNotUnique
-        puts "Dupe"
-      end
-=end
       v = Venue.where(:eid => eid,
                       :name => name,
                       :address => address,
