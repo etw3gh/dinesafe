@@ -1,45 +1,50 @@
 class Archiver
 
-  attr_reader :timestamp, :timestamped_dir, :archive_fullpath, :a, :file_name_base
+  attr_reader :timestamp, :a, :file_name_base, :filename, :timestamped_dir, :archive_fullpath
 
   # requires an hash defined in Acquisitions
   def initialize(acquisition)
-
     @a = acquisition
-
-    # directories will be named after this timestamp
-    # zip archives will be prepened with timestamp_
     @timestamp = Time.now.to_i.to_s
+    self.ensure_dir(@a[:path])
+    self.ensure_dir(@a[:archive])
+  end
 
-    @timestamped_dir = File.join(@a[:path], @timestamp)
+  def ensure_dir(dir)
+    Dir.mkdir(dir) unless Dir.exists?(dir)
+  end
 
-    # takes whatever comes after the last / in the url, this should be the filename
-    @file_name_base = @a[:url].split('/').last
+  def timestamped_dir
+    File.join(@a[:path], @timestamp)
+  end
 
-    @filename = @timestamp + '_' + @file_name_base
-    @archive_fullpath = File.join(@a[:archive], @filename)
+  def file_name_base
+    @a[:url].split('/').last
+  end
 
-    # ensure the asset directory (file_home) exists
-    Dir.mkdir(@a[:path]) unless Dir.exists?(@a[:path])
+  def filename
+    @timestamp + '_' + file_name_base
+  end
 
-    # ensure the archive directory (archive_home) exists
-    Dir.mkdir(@a[:archive]) unless Dir.exists?(@a[:archive])
+  def archive_fullpath
+    File.join(@a[:archive], filename)
   end
 
   def grab
     # ensure timestamped directory exists
-    Dir.mkdir(@timestamped_dir) unless Dir.exists?(@timestamped_dir)
-    system("wget #{@a[:url]} -O #{@archive_fullpath}")
+    #Dir.mkdir(timestamped_dir) unless Dir.exists?(timestamped_dir)
+    self.ensure_dir(timestamped_dir)
+    system("wget #{@a[:url]} -O #{archive_fullpath}")
     $?.exitstatus == 0 ? true : false
   end
 
   def verify
-    system("unzip -t #{@archive_fullpath}")
+    system("unzip -t #{archive_fullpath}")
     $?.exitstatus == 0 ? true : false
   end
 
   def extract
-    system("unzip #{@archive_fullpath} -d #{@timestamped_dir}")
+    system("unzip #{archive_fullpath} -d #{timestamped_dir}")
     $?.exitstatus == 0 ? true : false
   end
 
@@ -86,20 +91,12 @@ class Archiver
         puts "Archive result: #{archive.timestamp}, #{archive.zip}" unless archive.nil?
         n += 1
       end
-
     end
-
-
   end
-
-  def most_recent
-
-  end
-
 
   # for convenience and utility - DRY
   def do_and_print
-    f = @file_name_base
+    f = file_name_base
     fb = f.colorize(:blue)
     fr = f.colorize(:red)
 
