@@ -1,3 +1,5 @@
+# good candidate to seed into an Acquisitions model,
+
 class Acquisitions
 
   attr_accessor :shapefiles, :dinesafe

@@ -14,6 +14,9 @@ Archive grabber
 ---
 https://github.com/openciti/dinesafe/blob/master/config/initializers/archiver.rb
 
+ArchiveDirectory class
+---
+https://github.com/openciti/dinesafe/blob/master/config/initializers/archive_directory.rb
 
 Dinesafe XML scraper
 ---
