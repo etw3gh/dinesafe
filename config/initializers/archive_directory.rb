@@ -1,5 +1,5 @@
 class ArchiveDirectory
-  attr_accessor :aq
+  attr_reader :aq, :archive_file, :make_path, :extract_timestamp, :improper_file, :get_second_last_file
 
   def initialize(aq)
     @aq = aq
