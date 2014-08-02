@@ -1,3 +1,27 @@
+# each archive is timestamped and extracted into a directory 
+# bearing the name of the timestamp
+
+# todo do not extract or even keep redundant archives
+# todo rake task to purge redundant archives
+
+=begin
+├── 1406843156
+│   └── dinesafe.xml
+├── 1406886676
+│   └── dinesafe.xml
+├── 1406914477
+│   └── dinesafe.xml
+├── 1406929874
+│   └── dinesafe.xml
+└── archives
+    ├── 1406231317_dinesafe.zip
+    ├── 1406274485_dinesafe.zip
+    ├── 1406275506_dinesafe.zip
+    ├── 1406276130_dinesafe.zip
+    ├── 1406296085_dinesafe.zip
+    ├── 1406297107_dinesafe.zip
+=end
+
 class ArchiveDirectory
   attr_reader :aq, :archive_file, :make_path, :extract_timestamp, :improper_file, :get_second_last_file
 
@@ -22,8 +46,8 @@ class ArchiveDirectory
   end
 
   def get_second_last_file(sorted_array)
-    sorted_array[-2].to.s
-  end
+    sorted_array[-2].to_s
+    end
 
   # returns a tuple (is_new, timestamp) 
   def is_new
