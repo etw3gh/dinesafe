@@ -44,6 +44,11 @@ class DinesafeScraper
     # rows start at 1
     n = 1
 
+    new_entries = 0
+    existing_entries = 0
+    existing_venues = 0
+    new_venues = 0
+
     i.each_with_index do |row|
 
       #rid =      row.xpath('ROW_ID').text.to_i
@@ -79,14 +84,33 @@ class DinesafeScraper
                       :outcome => outcome,
                       :fine => fine).first_or_create(version: timestamp)
 
+      if Venue.last.eid == eid
+        existing_venues += 1
+      else
+        new_venus += 1
+      end 
+
+      if i.version == timestamp
+        existing_entries += 1
+      else
+        new_entries +=1
+      end
+
       nb = v.name.colorize(:blue)
       ib = i.iid.to_s.colorize(:blue)
       eb = v.eid.to_s.colorize(:blue)
 
-      puts "#{n.to_s} ".colorize(:green) + "name:#{nb}, EID: #{eb}, IID: #{ib}" if n % 500 == 0
+      puts "#{n} ".colorize(:green) + "name:#{nb}, EID: #{eb}, IID: #{ib}" if n % 500 == 0
 
       n += 1
     end
+
+        
+      puts "#{existing_entries.to_s.colorize(:blue)} Existing Entries".colorize(:green)
+      puts "#{new_entries.to_s.colorize(:blue)} New Entries".colorize(:green)
+      puts "#{existing_venues.to_s.colorize(:blue)} Existing Venues".colorize(:green)
+      puts "#{new_venues} New Venues".colorize(:green)
+
     true
   end
 end
