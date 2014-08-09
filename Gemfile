@@ -53,6 +53,9 @@ gem 'rufus-scheduler'
 # for file diff
 gem 'diffy'
 
+# for file downloads
+gem 'faraday'
+
 # for shapefile parsing
 gem 'dbf', '~>2.0.7'
 gem 'rgeo', '~>0.3.3'

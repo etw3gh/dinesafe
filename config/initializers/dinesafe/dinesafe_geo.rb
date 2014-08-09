@@ -1,8 +1,8 @@
 class DinesafeGeo
   attr_reader :timestamp, :aq, :fresh
 
-  def initialize
-    @aq = Acquisitions.new.shapefiles
+  def initialize(acquisition)
+    @aq = acquisition
     @fresh, @timestamp = ArchiveDirectory.new(@aq).is_new
   end
 

@@ -30,8 +30,10 @@ class Archiver
     File.join(a[:archive], filename)
   end
 
+
+
+
   def grab
-    self.ensure_dir(timestamped_dir)
     system("wget #{a[:url]} -O #{archive_fullpath}")
     $?.exitstatus == 0 ? true : false
   end
@@ -42,6 +44,7 @@ class Archiver
   end
 
   def extract
+    self.ensure_dir(timestamped_dir)
     system("unzip #{archive_fullpath} -d #{timestamped_dir}")
     $?.exitstatus == 0 ? true : false
   end

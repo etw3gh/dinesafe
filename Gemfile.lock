@@ -173,6 +173,7 @@ DEPENDENCIES
   colorize
   dbf (~> 2.0.7)
   diffy
+  faraday
   jbuilder (~> 2.0)
   jquery-rails
   nokogiri

@@ -1,9 +1,6 @@
 # each archive is timestamped and extracted into a directory 
 # bearing the name of the timestamp
 
-# todo do not extract or even keep redundant archives
-# todo rake task to purge redundant archives
-
 =begin
 ├── 1406843156
 │   └── dinesafe.xml
@@ -23,7 +20,8 @@
 =end
 
 class ArchiveDirectory
-  attr_reader :aq, :archive_file, :make_path, :extract_timestamp, :improper_file, :get_second_last_file
+  attr_reader :aq, :archive_file, :make_path, :extract_timestamp,
+              :improper_file, :get_second_last_file, :get_sorted_timestamps
 
   def initialize(aq)
     @aq = aq
@@ -47,18 +45,23 @@ class ArchiveDirectory
 
   def get_second_last_file(sorted_array)
     sorted_array[-2].to_s
-    end
+  end
 
-  # returns a tuple (is_new, timestamp) 
-  def is_new
+  def get_sorted_timestamps
     timestamps = Array.new
 
     # determine most recent directory by timestamp which is the dir name
     Dir.entries(aq[:archive]).each do |fn|
       timestamps.push(extract_timestamp(fn)) unless improper_file(fn)
     end
-    
-    sorted = timestamps.sort
+
+    timestamps.sort
+  end
+
+
+  # returns a tuple (is_new, timestamp) 
+  def is_new
+    sorted = get_sorted_timestamps
     timestamp = sorted.last
     
     most_recent_file = timestamp.to_s

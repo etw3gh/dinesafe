@@ -24,8 +24,8 @@
 class DinesafeScraper
   attr_reader :timestamp, :fresh, :aq
 
-  def initialize
-    @aq = Acquisitions.new.dinesafe
+  def initialize(acquisition)
+    @aq = acquisition
     @fresh, @timestamp = ArchiveDirectory.new(@aq).is_new
   end
 
