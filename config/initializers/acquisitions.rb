@@ -25,14 +25,14 @@ class Acquisitions
   def durham
     {url: 'http://www.durham.ca/dineSafe/DineSafeInspectionSearch.aspx',
      path: 'app/assets/dinesafe_durham',
-     filename: nil,
+     prefix: 'http://www.durham.ca/dineSafe/',
      archive: 'app/assets/dinesafe_durham/archives',
      category: 'durham',
      region: 'Durham'}
   end
 
   def infodine
-    {url: nil,
+    {url: 'http://www.niagararegion.ca/living/health_wellness/inspect/infodine/',
      path: 'app/assets/infodine',
      filename: nil,
      archive: 'app/assets/infodine/archives',

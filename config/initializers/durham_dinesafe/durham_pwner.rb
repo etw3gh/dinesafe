@@ -1,11 +1,10 @@
 class DurhamPwner
 
-  attr_reader :aq, :timestamp, :url_prefix
+  attr_reader :aq, :timestamp
 
   def initialize(acquisition)
     @aq = acquisition
     @timestamp = Time.now.to_i
-    @url_prefix = 'http://www.durham.ca/dineSafe/'
   end
 
   def inspections
@@ -33,7 +32,6 @@ class DurhamPwner
   end
 
   def mass_wget(urls)
-
     fails = Array.new
 
     self.ensure_dir(aq[:path])
@@ -42,13 +40,15 @@ class DurhamPwner
 
     urls.each do |url_suffix|
       id = url_suffix.split('=').last.strip
-      url = url_prefix + url_suffix
+      url = aq[:prefix] + url_suffix
       destination_file = File.join(destination, id)
       system("wget #{url} -O #{destination_file}")
+
       unless $?.exitstatus == 0
         puts "Failed to get #{id}".colorize(:red)
         fails.push(url)
       end
+
       if fails.count == 0
         puts "#{fails.count} Errors: "
         puts fails
@@ -57,4 +57,5 @@ class DurhamPwner
       end
     end
   end
+
 end
