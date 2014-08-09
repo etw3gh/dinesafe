@@ -19,6 +19,9 @@ dinesafe.xml
 secrets.yml
 /app/assets/shapefiles
 /app/assets/shapefiles/*
+/app/assets/infodine
+/app/assets/dinesafe_durham
+
 *.dbf
 *.prj
 *.shp
