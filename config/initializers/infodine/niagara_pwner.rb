@@ -36,7 +36,6 @@ class NiagaraPwner
       regional_inspections_url = File.join(aq[:url], link)
       regional_noko = Nokogiri::HTML(open(regional_inspections_url))
 
-      fails = Array.new
       link = addy = name = date = ''
 
       for div in regional_noko.css('div#global_content>ul.infodine_list_results').children
@@ -53,19 +52,13 @@ class NiagaraPwner
 
           url = self.strip_chars(url, ['(', ')', 39.chr])
 
-          system("wget -O #{destination_file} #{url}")
-          unless $?.exitstatus == 0
-            puts "ERROR: #{url}".colorize(:red)
-            fails.push(url)
-          end
-          puts url.colorize(:light_green)
+          g = Grab.where(:category => 'infodine',
+                     :path => destination_file,
+                     :url => url,
+                     :downloaded => false).first_or_create
+
+          puts g.path.colorize(:green) + ' ' + g.url.colorize(:light_blue)
         end
-      end
-      if fails.count == 0
-        puts "OK: #{region}".colorize(:green)
-      else
-        puts fails
-        puts "#{fails.count} errors: ".colorize(:red)
       end
     end
   end

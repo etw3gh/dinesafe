@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140723000001) do
+ActiveRecord::Schema.define(version: 20140809224431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,12 +43,11 @@ ActiveRecord::Schema.define(version: 20140723000001) do
     t.string   "zip"
     t.string   "data"
     t.string   "region"
-    t.string   "subregion"
     t.string   "category"
     t.integer  "filecount"
-    t.boolean  "fresh"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "headstamp"
   end
 
   add_index "archives", ["timestamp"], name: "index_archives_on_timestamp", unique: true, using: :btree
@@ -71,6 +70,15 @@ ActiveRecord::Schema.define(version: 20140723000001) do
 
   add_index "events", ["iid"], name: "index_events_on_iid", using: :btree
 
+  create_table "grabs", force: true do |t|
+    t.string   "category"
+    t.string   "path"
+    t.text     "url"
+    t.boolean  "downloaded"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "inspections", force: true do |t|
     t.integer "rid"
     t.integer "eid"
@@ -90,6 +98,13 @@ ActiveRecord::Schema.define(version: 20140723000001) do
   end
 
   add_index "inspections", ["iid"], name: "index_inspections_on_iid", using: :btree
+
+  create_table "latest_archives", force: true do |t|
+    t.string  "category"
+    t.integer "headstamp"
+  end
+
+  add_index "latest_archives", ["category"], name: "index_latest_archives_on_category", unique: true, using: :btree
 
   create_table "shapes", force: true do |t|
     t.integer  "timestamp",  null: false
