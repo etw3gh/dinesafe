@@ -10,6 +10,6 @@ namespace :durham do
 
   desc "Scrapes the inspection sites"
   task :scrape => :environment do
-    
+
   end
 end

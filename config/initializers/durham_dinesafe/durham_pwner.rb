@@ -33,13 +33,14 @@ class DurhamPwner
 
   def mass_wget(urls)
     self.ensure_dir(aq[:path])
-    destination = File.join(aq[:path], timestamp)
+    destination = File.join(aq[:path], timestamp.to_s)
     self.ensure_dir(destination)
 
-    urls.each do |url|
-      id = url.split('=').last.strip
+    urls.each do |url_suffix|
+      id = url_suffix.split('=').last.strip
+      url_prefix = "http://www.durham.ca/dineSafe/"
       destination_file = File.join(destination, id)
-      system("wget #{url} -O #{destination_file}")
+      system("wget #{url_prefix + url_suffix} -O #{destination_file}")
       unless $?.exitstatus == 0
         puts "Failed to get #{id}".colorize(:red)
       end
