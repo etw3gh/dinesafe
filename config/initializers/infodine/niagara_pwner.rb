@@ -1,18 +1,20 @@
 require 'open-uri'
 class NiagaraPwner
   attr_reader :aq, :timestamp, :timestamp_dir, :wget
-  attr_accessor :regions
 
   def initialize(acquisition, ts = Time.now.to_i.to_s)
     @aq = acquisition
     @timestamp = ts.to_s
-    @regions = Hash.new
     @timestamp_dir = File.join(aq[:path], ts.to_s)
     self.ensure_path(timestamp_dir)
-    @wget = "wget -nc -O -q"
+    @wget = "wget -O "
   end
 
-  def get_region_urls
+  def ensure_path(path)
+    FileUtils.mkpath(path) unless File.exists?(path)
+  end
+
+  def get_inspection_data
     home_page = Nokogiri::HTML(open(aq[:url]))
     region_links = home_page.css('form#infodine_search_form').css('a')
 
@@ -22,58 +24,24 @@ class NiagaraPwner
     city_offset = city.length + 1
 
     region_links.map do |a|
+
       #extract link
       link = a['href']
 
       # extract region and translate + to underscore (tr)
       region = link[(link =~ Regexp.new(city)) + city_offset..link.length].strip.tr('+', '_')
-      # start a nested hash
-      regions[region] = Hash.new
-      regions[region][:link] = link
+      puts region.colorize(:orange)
 
-      #while we have the region, make the urls and inspections directories for each region
-      urls_dir = File.join(timestamp_dir, region, 'urls')
-      insp_dir = File.join(timestamp_dir, region, 'inspections')
+      regional_dir = File.join(timestamp_dir, region)
+      self.ensure_path(regional_dir)
 
-      self.ensure_path(urls_dir)
-      self.ensure_path(insp_dir)
+      regional_inspections_url = File.join(aq[:url], link)
+      regional_noko = Nokogiri::HTML(open(regional_inspections_url))
 
-      regions[region][:urls_dir] = urls_dir
-      regions[region][:insp_dir] = insp_dir
-      puts link.colorize(:green)
-    end
-    regions
-  end
-
-  def ensure_path(path)
-    FileUtils.mkpath(path) unless File.exists?(path)
-  end
-
-  def get_regional_html
-    regions.each do |key, value|
-      destination_file = File.join(regions[key][:urls_dir], key + '.html')
-      url = File.join(aq[:url], value[:link])
-
-      system("#{wget} #{destination_file} #{url}")
-
-      unless $?.exitstatus == 0
-        puts "ERROR: #{url}".colorize(:red)
-      end
-      puts url.colorize(:blue)
-    end
-  end
-
-  def get_inspections
-    fails = Array.new
-
-    Dir.entries(urls_dir).each do |fn|
-      region = fn.split('.html')[0]
-      html_file = File.join(regions[region][:urls_dir], fn)
-      noko = Nokogiri::HTML(open(html_file))
-
+      fails = Array.new
       link = addy = name = date = ''
 
-      for div in noko.css('div#global_content>ul.infodine_list_results').children
+      for div in regional_noko.css('div#global_content>ul.infodine_list_results').children
 
         link = div.css('a[href]').map {|e| e['href']}[0]
         addy = div.css('span.info_address').text.to_s
@@ -82,12 +50,12 @@ class NiagaraPwner
 
         unless link.nil?
           file_name = CGI::escape(name.strip.gsub(' ', '_'))+ '.html'
-          destination_file = File.join(regions[region][:insp_dir], file_name)
+          destination_file = File.join(regional_dir, file_name)
           url = (aq[:url] + link)
 
           url = self.strip_chars(url, ['(', ')', 39.chr])
 
-          system("#{wget} #{destination_file} #{url} ")
+          system("#{wget} #{destination_file} #{url}")
           unless $?.exitstatus == 0
             puts "ERROR: #{url}".colorize(:red)
             fails.push(url)
@@ -95,7 +63,6 @@ class NiagaraPwner
           puts url.colorize(:light_green)
         end
       end
-
       if fails.count == 0
         puts "OK: #{region}".colorize(:green)
       else
@@ -116,5 +83,4 @@ class NiagaraPwner
     end
     a_string
   end
-
 end
