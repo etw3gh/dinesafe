@@ -1,13 +1,11 @@
 require 'open-uri'
 class NiagaraPwner
-  attr_reader :aq, :timestamp, :timestamp_dir, :wget
+  attr_reader :aq, :timestamp_dir
 
-  def initialize(acquisition, ts = Time.now.to_i.to_s)
+  def initialize(acquisition, timestamp = Time.now.to_i.to_s)
     @aq = acquisition
-    @timestamp = ts.to_s
-    @timestamp_dir = File.join(aq[:path], ts.to_s)
+    @timestamp_dir = File.join(aq[:path], timestamp.to_s)
     self.ensure_path(timestamp_dir)
-    @wget = "wget -O "
   end
 
   def ensure_path(path)
@@ -55,7 +53,7 @@ class NiagaraPwner
 
           url = self.strip_chars(url, ['(', ')', 39.chr])
 
-          system("#{wget} #{destination_file} #{url}")
+          system("wget -O #{destination_file} #{url}")
           unless $?.exitstatus == 0
             puts "ERROR: #{url}".colorize(:red)
             fails.push(url)
