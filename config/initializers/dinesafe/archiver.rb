@@ -1,10 +1,11 @@
 class Archiver
 
-  attr_reader :timestamp, :a, :file_name_base, :filename, :timestamped_dir, :archive_fullpath
+  attr_reader :timestamp, :a, :file_name_base, :filename, :timestamped_dir, :archive_fullpath, :headstamp
 
   # requires an hash defined in Acquisitions
-  def initialize(acquisition)
+  def initialize(acquisition, headstamp)
     @a = acquisition
+    @headstamp = headstamp
     @timestamp = Time.now.to_i.to_s
     self.ensure_dir(@a[:path])
     self.ensure_dir(@a[:archive])
@@ -30,9 +31,6 @@ class Archiver
     File.join(a[:archive], filename)
   end
 
-
-
-
   def grab
     system("wget #{a[:url]} -O #{archive_fullpath}")
     $?.exitstatus == 0 ? true : false
@@ -49,61 +47,30 @@ class Archiver
     $?.exitstatus == 0 ? true : false
   end
 
-  def populate
-    Dir.entries(a[:archive]).each do |f|
+  def persist
+    archive_time_stamp = timestamp.split('_')[0]
+    zip_full_path = File.join(a[:archive], file_name_base)
 
-      n = 0
-      # exclude "." and ".."
-      unless f[0] == '.'
+    data_dir = Dir.entries(File.join(a[:path], archive_time_stamp))
+    extracted_files = data_dir.count - 2
 
-        previous_f = f
+    archive = Archive.where( :timestamp => archive_time_stamp,
+                             :zip => zip_full_path,
+                             :data => data_dir,
+                             :filecount => extracted_files,
+                             :region => a[:region],
+                             :category => a[:category],
+                             :headstamp => headstamp).first_or_create
 
-        archive_time_stamp = f.split('_')[0]
-
-        data_dir = Dir.entries(File.join(a[:path], archive_time_stamp))
-        extracted_files = data_dir.count - 2
-
-        zip_full_path = File.join(a[:archive], f)
-
-        # Archive has primary_key set to timestamp
-
-        latest = true
-        unless n == 0
-          diff = Diffy::Diff.new(previous_f, zip_full_path, :source => 'files').diff
-
-          if diff.nil? || diff.empty?
-            latest = false
-          else
-            latest = true
-          end
-        end
-
-        archive = Archive.where( :timestamp => archive_time_stamp,
-                                 :zip => zip_full_path,
-                                 :data => data_dir,
-                                 :filecount => extracted_files,
-                                 :region => a[:region],
-                                 :subregion =>  a[:subregion],
-                                 :category => a[:category],
-                                 :fresh => latest).first_or_create
-
-        puts "Archive result: #{archive.timestamp}, #{archive.zip}" unless archive.nil?
-        n += 1
-      end
-    end
+    puts "Archive result: #{archive.timestamp}, #{archive.zip}" unless archive.nil?
   end
 
-  # for convenience and utility - DRY
-  def do_and_print
+  def print_setup
     f = file_name_base
     fb = f.colorize(:blue)
     fr = f.colorize(:red)
 
-    puts "\nDownloading #{f}............".colorize(:green)
-
-    puts self.grab ? 'Downloaded: '.colorize(:green) + fb : "Failed Download: #{fr}"
-    puts self.verify ? 'Verified: '.colorize(:green) + fb : "Failed Verify: #{fr}"
-    puts self.extract ? 'Extracted: '.colorize(:green) + fb : "Failed Extraction: #{fr}"
+    return f, fb, fr
   end
 
 end

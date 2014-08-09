@@ -22,23 +22,35 @@
 =end
 
 class DinesafeScraper
-  attr_reader :timestamp, :fresh, :aq
+  attr_reader :aq, :archive_directory
 
-  def initialize(acquisition)
+  def initialize(acquisition, archive_directory)
     @aq = acquisition
-    @fresh, @timestamp = ArchiveDirectory.new(@aq).is_new
+    @archive_directory = archive_directory
   end
 
-  def xml_file_path
+  def xml_file_path(timestamp)
     File.join(aq[:path], timestamp, aq[:dinesafe])
   end
 
-  def parse
-    return false if timestamp.nil?
-    return false unless Event.where(:version => timestamp).count == 0 && fresh
+  def parse_all
+    archive_directory.get_sorted_timestamps.each do |a_timestamp|
+      unless Event.where(:version => a_timestamp).count == 0
+        puts self.parse(a_timestamp) ?
+                 "OK on #{a_timestamp}".colorize(:light_blue) :
+                 "ERROR on #{a_timestamp}".colorize(:red)
+      end
+    end
+  end
 
+  def parse(timestamp)
     # splits the xml file into single inspection chunks (see top of file)
-    i = Nokogiri::XML(File.open(xml_file_path)).css('ROWDATA ROW')
+
+    return false unless Scrape.where(:version => timestamp).count == 0
+
+    path = xml_file_path(timestamp)
+
+    i = Nokogiri::XML(File.open(path)).css('ROWDATA ROW')
 
     # counter for output
     # rows start at 1
@@ -105,11 +117,14 @@ class DinesafeScraper
       n += 1
     end
 
-        
-      puts "#{existing_entries.to_s.colorize(:blue)} Existing Entries".colorize(:green)
-      puts "#{new_entries.to_s.colorize(:blue)} New Entries".colorize(:green)
-      puts "#{existing_venues.to_s.colorize(:blue)} Existing Venues".colorize(:green)
-      puts "#{new_venues} New Venues".colorize(:green)
+    puts 'Version: '.colorize(:orange) + timestamp.to_s.colorize(:light_green)
+    puts "#{existing_entries.to_s.colorize(:blue)} Existing Entries".colorize(:green)
+    puts "#{new_entries.to_s.colorize(:blue)} New Entries".colorize(:green)
+    puts "#{existing_venues.to_s.colorize(:blue)} Existing Venues".colorize(:green)
+    puts "#{new_venues.to_s.colorize(:blue)} New Venues".colorize(:green)
+    puts "\n" + '-' * 80 + "\n"
+
+    Scrape.create(:category => aq[:category], :version => timestamp)
 
     true
   end

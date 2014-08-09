@@ -1,9 +1,9 @@
 class DinesafeGeo
-  attr_reader :timestamp, :aq, :fresh
+  attr_reader :timestamp, :aq
 
-  def initialize(acquisition)
+  def initialize(acquisition, archive_directory)
     @aq = acquisition
-    @fresh, @timestamp = ArchiveDirectory.new(@aq).is_new
+    @timestamp = archive_directory.get_sorted_timestamps.last
   end
 
   def most_recent_fullpath
@@ -11,8 +11,10 @@ class DinesafeGeo
   end
 
   def parse
-    return false if timestamp.nil?
-    return false unless Shape.where(:timestamp => timestamp).count == 0 && fresh
+    return false unless Shape.where(:timestamp => timestamp).count == 0
+
+    # truncate table we are only interested in the latest data
+    Address.delete_all
 
     # set the shape model up
     s = Shape.where(:timestamp => timestamp, :region => 'Toronto').first_or_create
@@ -25,8 +27,6 @@ class DinesafeGeo
       file.each do |record|
 
         attributes = record.attributes
-        #puts attributes
-        #puts "  Geometry: #{record.geometry.as_text}"
 
         lat = attributes['LATITUDE']
         lng = attributes['LONGITUDE']
@@ -57,9 +57,10 @@ class DinesafeGeo
                           :dist => dist.to_f,
                           :name => name).first_or_create
 
-        puts n.to_s.colorize(:light_blue) + " #{num} #{street}".colorize(:orange) + " #{name} ".colorize(:yellow) + "#{lat} #{lng}".colorize(:blue)
+        puts n.to_s.colorize(:light_blue) + ": #{num} #{street}".colorize(:orange) + " #{name} ".colorize(:yellow) + "#{lat} #{lng}".colorize(:blue)
         n -= 1
       end
     end
+    Scrape.create(:category => aq[:category], :version => timestamp)
   end
 end
