@@ -1,6 +1,6 @@
 namespace :infodine do
 
-  # aquires quite a few files (thousands)
+  # aquires quite a few files (3109)
   # D.B.A.D.
 
   infodine = Acquisitions.instance.infodine
@@ -11,4 +11,8 @@ namespace :infodine do
     n.get_inspection_data
   end
 
+  desc "scrape the final inspection urls"
+  task :scrape => :environment do
+
+  end
 end
