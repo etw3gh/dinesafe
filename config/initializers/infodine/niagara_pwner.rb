@@ -32,8 +32,8 @@ class NiagaraPwner
       regions[region][:link] = link
 
       #while we have the region, make the urls and inspections directories for each region
-      urls_dir = File.join(timestamp_dir, region + 'urls')
-      insp_dir = File.join(timestamp_dir, region + 'inspections')
+      urls_dir = File.join(timestamp_dir, region, 'urls')
+      insp_dir = File.join(timestamp_dir, region, 'inspections')
 
       self.ensure_path(urls_dir)
       self.ensure_path(insp_dir)
