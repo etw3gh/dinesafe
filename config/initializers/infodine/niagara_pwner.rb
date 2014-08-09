@@ -5,9 +5,9 @@ class NiagaraPwner
 
   def initialize(acquisition, ts = Time.now.to_i.to_s)
     @aq = acquisition
-    @timestamp = ts
+    @timestamp = ts.to_s
     @regions = Hash.new
-    @timestamp_dir = File.join(aq[:path], ts)
+    @timestamp_dir = File.join(aq[:path], ts.to_s)
     self.ensure_path(timestamp_dir)
     @wget = "wget -nc -O -q"
   end
