@@ -16,6 +16,12 @@ namespace :infodine do
     n.get_inspections(1407571788)
   end
 
+  desc "testing region names"
+  task :reg => :environment do
+    n = NiagaraPwner.new(infodine)
+    puts n.get_region_urls
+  end
+
   desc "parse the pwned sites"
   task :parse => :environment do
 

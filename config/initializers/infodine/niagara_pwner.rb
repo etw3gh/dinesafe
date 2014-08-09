@@ -1,14 +1,15 @@
 require 'open-uri'
 class NiagaraPwner
-  attr_reader :aq, :timestamp
-  attr_accessor :regions, :region_insp_sub_dir
+  attr_reader :aq, :timestamp, :timestamp_dir, :wget
+  attr_accessor :regions
 
   def initialize(acquisition)
     @aq = acquisition
-    @timestamp = Time.now.to_i
+    @timestamp = Time.now.to_i.to_s
     @regions = Hash.new
-    self.ensure_dir(aq[:path])
-    self.ensure_dir(aq[:archive])
+    @timestamp_dir = File.join(aq[:path], timestamp)
+    self.ensure_path(timestamp_dir)
+    @wget = "wget -nc -O "
   end
 
   def get_region_urls
@@ -22,40 +23,40 @@ class NiagaraPwner
 
     region_links.map do |a|
 
+
       # extract link
       link = a['href']
 
-      # extract region and translate + to space (tr)
-      region = link[(link =~ Regexp.new(city)) + city_offset..link.length].tr('+', ' ')
-      # store in hash
-      regions[region] = link
+      # extract region and translate + to underscore (tr)
+      region = link[(link =~ Regexp.new(city)) + city_offset..link.length].strip.tr('+', '_')
+      # start a nested hash
+      region[region] = Hash.new
+      regions[region][:link] = link
+
+      #while we have the region, make the urls and inspections directories for each region
+      urls_dir = File.join(timestamp_dir, region + 'urls')
+      insp_dir = File.join(timestamp_dir, region + 'inspections')
+
+      self.ensure_path(urls_dir)
+      self.ensure_path(insp_dir)
+
+      region[region][:urls_dir] = urls_dir
+      region[region][:insp_dir] = insp_dir
+
     end
     regions
   end
 
-  def ensure_dir(dir)
-    Dir.mkdir(dir) unless Dir.exists?(dir)
+  def ensure_path(path)
+    FileUtils.mkpath(path) unless File.exists?(path)
   end
 
   def get_regional_html
-
-    timestamped_url_dir = File.join(aq[:archive], timestamp.to_s)
-    timestamped_inspections_dir = File.join(aq[:path], timestamp.to_s)
-    self.ensure_dir(timestamped_url_dir)
-    self.ensure_dir(timestamped_inspections_dir)
     regions.each do |key, value|
-      region_insp_sub_dir = File.join(timestamped_inspections_dir, key)
+      destination_file = File.join(regions[key][:urls_dir], key + '.html')
+      url = File.join(aq[:url], value)
 
-      self.ensure_dir(region_insp_sub_dir)
-
-      file_name = key.strip.gsub(' ', '_') + '.html'
-
-      destination_file = File.join(timestamped_url_dir, file_name)
-      puts destination_file.colorize(:green)
-      url = aq[:url] + value
-      puts url.colorize(:blue)
-
-      system("wget -O #{destination_file} #{url}")
+      system("#{wget} #{destination_file} #{url}")
 
       unless $?.exitstatus == 0
         puts "ERROR: #{url}".colorize(:red)
@@ -65,37 +66,29 @@ class NiagaraPwner
 
   def get_inspections(ts = timestamp)
     fails = Array.new
-    timestamped_url_dir = File.join(aq[:archive], ts.to_s)
-    Dir.entries(timestamped_url_dir).each do |fn|
-      region = fn.gsub('_', ' ').split('.html')[0]
-      html_file = File.join(timestamped_url_dir, fn)
-      #puts html_file.colorize(:green)
+
+    Dir.entries(urls_dir).each do |fn|
+      region = fn.split('.html')[0]
+      html_file = File.join(regions[region][:urls_dir], fn)
       noko = Nokogiri::HTML(open(html_file))
 
       link = addy = name = date = ''
 
       for div in noko.css('div#global_content>ul.infodine_list_results').children
-        #link = div.css('a[href]').css('href')[0].text.to_s
+
         link = div.css('a[href]').map {|e| e['href']}[0]
         addy = div.css('span.info_address').text.to_s
         name = div.css('span.info_business').text.to_s
         date = div.css('span.info_inspection').text.to_s
 
         unless link.nil?
-          #puts "#{name} #{addy} #{date}".colorize(:orange)
-          #puts link
-
-          timestamped_inspections_dir = File.join(aq[:path], ts.to_s)
-
           file_name = CGI::escape(name.strip.gsub(' ', '_'))+ '.html'
+          destination_file = File.join(regions[region][:insp_dir], file_name)
+          url = (aq[:url] + link)
 
-          destination_file = File.join(timestamped_inspections_dir, region, file_name)
+          url = self.strip_chars(url, ['(', ')', 39.chr])
 
-          url = (aq[:url] + link).gsub('(', '\(').gsub(')','\)').gsub(39.chr, 92.chr+92.chr+39.chr)
-          #puts destination_file.colorize(:green)
-          #puts url.colorize(:blue)
-
-          system("wget -q -O #{destination_file} #{url} ")
+          system("#{wget} #{destination_file} #{url} ")
           unless $?.exitstatus == 0
             puts "ERROR: #{url}".colorize(:red)
             fails.push(url)
@@ -111,4 +104,17 @@ class NiagaraPwner
       end
     end
   end
+
+  def strip_chars(a_string, char_array = [])
+    slash = 92.chr
+    single_quote = 39.chr
+    double_slash = slash * 2
+
+    char_array.each do |c|
+      escape = (c == single_quote ? double_slash : slash)
+      a_string = a_string.gsub(c, escape + c)
+    end
+    a_string
+  end
+
 end
