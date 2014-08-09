@@ -12,19 +12,19 @@ http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=4a37e03bb8d1e310VgnVCM10
 
 Archive grabber
 ---
-https://github.com/openciti/dinesafe/blob/master/config/initializers/archiver.rb
+https://github.com/openciti/dinesafe/blob/master/config/initializers/dinesafe/archiver.rb
 
 ArchiveDirectory class
 ---
-https://github.com/openciti/dinesafe/blob/master/config/initializers/archive_directory.rb
+https://github.com/openciti/dinesafe/blob/master/config/initializers/dinesafe/archive_directory.rb
 
 Dinesafe XML scraper
 ---
-https://github.com/openciti/dinesafe/blob/master/config/initializers/dinesafe_scraper.rb
+https://github.com/openciti/dinesafe/blob/master/config/initializers/dinesafe/dinesafe_scraper.rb
 
 ShapeFile scraper
 ---
-https://github.com/openciti/dinesafe/blob/master/config/initializers/dinesafe_geo.rb
+https://github.com/openciti/dinesafe/blob/master/config/initializers/dinesafe/dinesafe_geo.rb
 
 [screencap](https://raw.githubusercontent.com/openciti/dinesafe/master/app/assets/images/dev_screenshots/geo.png)
 

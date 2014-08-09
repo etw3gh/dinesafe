@@ -30,5 +30,5 @@ class Acquisitions
      category: 'infodine',
      region: 'Niagara'}
   end
-  
+
 end
