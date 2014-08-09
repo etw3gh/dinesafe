@@ -33,11 +33,11 @@ Dinesafe (Durham)
 ---
 Nicely puts all (approx 3000) inspection links on a single page
 
-    pwner:
-    https://github.com/openciti/dinesafe/blob/master/config/initializers/durham_dinesafe/durham_pwner.rb
+pwner:
+https://github.com/openciti/dinesafe/blob/master/config/initializers/durham_dinesafe/durham_pwner.rb
 
-    scraper:
-    https://github.com/openciti/dinesafe/blob/master/config/initializers/durham_dinesafe/durham_scraper.rb
+scraper:
+https://github.com/openciti/dinesafe/blob/master/config/initializers/durham_dinesafe/durham_scraper.rb
 
 
 InfoDine - Niagara (12 regions)
