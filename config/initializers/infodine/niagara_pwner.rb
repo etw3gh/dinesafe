@@ -22,15 +22,13 @@ class NiagaraPwner
     city_offset = city.length + 1
 
     region_links.map do |a|
-
-
-      # extract link
+      #extract link
       link = a['href']
 
       # extract region and translate + to underscore (tr)
       region = link[(link =~ Regexp.new(city)) + city_offset..link.length].strip.tr('+', '_')
       # start a nested hash
-      region[region] = Hash.new
+      regions[region] = Hash.new
       regions[region][:link] = link
 
       #while we have the region, make the urls and inspections directories for each region
@@ -40,8 +38,8 @@ class NiagaraPwner
       self.ensure_path(urls_dir)
       self.ensure_path(insp_dir)
 
-      region[region][:urls_dir] = urls_dir
-      region[region][:insp_dir] = insp_dir
+      regions[region][:urls_dir] = urls_dir
+      regions[region][:insp_dir] = insp_dir
 
     end
     regions
@@ -54,7 +52,7 @@ class NiagaraPwner
   def get_regional_html
     regions.each do |key, value|
       destination_file = File.join(regions[key][:urls_dir], key + '.html')
-      url = File.join(aq[:url], value)
+      url = File.join(aq[:url], value[:link])
 
       system("#{wget} #{destination_file} #{url}")
 
