@@ -33,8 +33,11 @@ Dinesafe (Durham)
 ---
 Nicely puts all (approx 3000) inspection links on a single page
 
-    pwner: https://github.com/openciti/dinesafe/blob/master/config/initializers/durham_dinesafe/durham_pwner.rb
-    scraper:https://github.com/openciti/dinesafe/blob/master/config/initializers/durham_dinesafe/durham_scraper.rb
+    pwner:
+    https://github.com/openciti/dinesafe/blob/master/config/initializers/durham_dinesafe/durham_pwner.rb
+
+    scraper:
+    https://github.com/openciti/dinesafe/blob/master/config/initializers/durham_dinesafe/durham_scraper.rb
 
 
 InfoDine - Niagara (12 regions)
@@ -45,9 +48,11 @@ More involved than Durham region as there are 12 inspection sites instead of one
 https://github.com/openciti/dinesafe/blob/master/config/initializers/infodine/niagara_pwner.rb
 
     - gets the 12 regional urls from the infodine homepage
-    - creates a directory structure with a timestamp as the root and with a subfolder for each region
+    - creates a directory structure with a timestamp as the root and
+        with a subfolder for each region
     - blasts through each regional site to get inspection urls
-    - saves the eventual desired file path and the url in the Grab model for later processing
+    - saves the eventual desired file path and the url in the Grab
+        model for later processing
     - TODO start a cron task to perform scraping on the over 3000 inspection urls
     - TODO write the final scraper
 
