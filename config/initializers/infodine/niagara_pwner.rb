@@ -3,13 +3,13 @@ class NiagaraPwner
   attr_reader :aq, :timestamp, :timestamp_dir, :wget
   attr_accessor :regions
 
-  def initialize(acquisition)
+  def initialize(acquisition, ts = Time.now.to_i.to_s)
     @aq = acquisition
-    @timestamp = Time.now.to_i.to_s
+    @timestamp = ts
     @regions = Hash.new
     @timestamp_dir = File.join(aq[:path], timestamp)
     self.ensure_path(timestamp_dir)
-    @wget = "wget -nc -O "
+    @wget = "wget -nc -O -q"
   end
 
   def get_region_urls
@@ -40,7 +40,7 @@ class NiagaraPwner
 
       regions[region][:urls_dir] = urls_dir
       regions[region][:insp_dir] = insp_dir
-
+      puts link.colorize(:green)
     end
     regions
   end
@@ -59,10 +59,11 @@ class NiagaraPwner
       unless $?.exitstatus == 0
         puts "ERROR: #{url}".colorize(:red)
       end
+      puts url.colorize(:blue)
     end
   end
 
-  def get_inspections(ts = timestamp)
+  def get_inspections
     fails = Array.new
 
     Dir.entries(urls_dir).each do |fn|
@@ -91,6 +92,7 @@ class NiagaraPwner
             puts "ERROR: #{url}".colorize(:red)
             fails.push(url)
           end
+          puts url.colorize(:light_green)
         end
       end
 

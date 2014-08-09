@@ -7,13 +7,15 @@ namespace :infodine do
     n = NiagaraPwner.new(infodine)
     n.get_region_urls
     n.get_regional_html
-    n.get_inspections(n.timestamp)
+    n.get_inspections
   end
 
-  desc "pwn the inspectins with a hard coded timestamp"
+  desc "repwn the inspectins with a hard coded timestamp"
   task :pwni => :environment do
-    n = NiagaraPwner.new(infodine)
-    n.get_inspections(1407571788)
+    n = NiagaraPwner.new(infodine, 1407618093)
+    n.get_region_urls
+    n.get_regional_html
+    n.get_inspections
   end
 
   desc "testing region names"
