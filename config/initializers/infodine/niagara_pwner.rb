@@ -7,7 +7,7 @@ class NiagaraPwner
     @aq = acquisition
     @timestamp = ts
     @regions = Hash.new
-    @timestamp_dir = File.join(aq[:path], timestamp)
+    @timestamp_dir = File.join(aq[:path], ts)
     self.ensure_path(timestamp_dir)
     @wget = "wget -nc -O -q"
   end
