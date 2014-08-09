@@ -22,6 +22,15 @@ class Acquisitions
      region: 'Toronto'}
   end
 
+  def durham
+    {url: 'http://www.durham.ca/dineSafe/DineSafeInspectionSearch.aspx',
+     path: 'app/assets/dinesafe_durham',
+     filename: nil,
+     archive: 'app/assets/dinesafe_durham/archives',
+     category: 'durham',
+     region: 'Durham'}
+  end
+
   def infodine
     {url: nil,
      path: 'app/assets/infodine',

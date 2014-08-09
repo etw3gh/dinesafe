@@ -44,6 +44,8 @@ gem 'colorize'
 # for web and xml parsing
 gem 'nokogiri'
 
+gem 'mechanize'
+
 # for unzipping
 gem 'zipruby'
 
