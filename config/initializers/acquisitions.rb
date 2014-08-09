@@ -35,7 +35,7 @@ class Acquisitions
     {url: 'http://www.niagararegion.ca/living/health_wellness/inspect/infodine/',
      path: 'app/assets/infodine',
      filename: nil,
-     archive: 'app/assets/infodine/archives',
+     archive: 'app/assets/infodine/urls',
      category: 'infodine',
      region: 'Niagara'}
   end
