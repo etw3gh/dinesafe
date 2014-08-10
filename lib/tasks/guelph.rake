@@ -1,3 +1,5 @@
+require_relative('../app_regional/acquisitions')
+
 namespace :guelph do
 
   guelph = Acquisitions.instance.guelph

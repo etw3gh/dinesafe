@@ -1,5 +1,7 @@
-namespace :york do
+require_relative('../app_regional/acquisitions')
+require_relative('../app_regional/ontario/york/york_pwner')
 
+namespace :york do
   york = Acquisitions.instance.york
 
 

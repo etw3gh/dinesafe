@@ -1,3 +1,5 @@
+require_relative('../app_regional/acquisitions')
+
 namespace :dinesafe do
 
   dinesafe = Acquisitions.instance.dinesafe

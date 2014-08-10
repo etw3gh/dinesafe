@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140810033457) do
+ActiveRecord::Schema.define(version: 20140810170243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,8 +77,9 @@ ActiveRecord::Schema.define(version: 20140810033457) do
     t.boolean  "downloaded"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "scraped",    default: false
-    t.integer  "timestamp",  default: 1407641758
+    t.boolean  "scraped",       default: false
+    t.integer  "timestamp",     default: 1407641758
+    t.integer  "last_modified"
   end
 
   create_table "inspections", force: true do |t|

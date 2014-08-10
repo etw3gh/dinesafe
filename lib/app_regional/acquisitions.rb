@@ -23,25 +23,25 @@ class Acquisitions
 
   def durham
     {url: 'http://www.durham.ca/dineSafe/DineSafeInspectionSearch.aspx',
-     path: 'app/assets/dinesafe_durham',
+     path: 'lib/assets/dinesafe_durham',
      prefix: 'http://www.durham.ca/dineSafe/',    # TODO please standardize this stuff
-     archive: 'app/assets/dinesafe_durham/archives',
+     archive: 'lib/assets/dinesafe_durham/archives',
      category: 'durham',
      region: 'Durham'}
   end
 
   def infodine
     {url: 'http://www.niagararegion.ca/living/health_wellness/inspect/infodine/',
-     path: 'app/assets/infodine',
+     path: 'lib/assets/infodine',
      filename: nil,
-     archive: 'app/assets/infodine/',
+     archive: 'lib/assets/infodine/',
      category: 'infodine',
      region: 'Niagara'}
   end
 
   def waterloo
     {url: 'http://www.regionofwaterloo.ca/en/regionalGovernment/FoodPremiseDataset.asp',
-     path: 'app/assets/waterloo',
+     path: 'lib/assets/waterloo',
      filename: nil,
      subpaths: {:shp =>  'http://www.regionofwaterloo.ca/opendatadownloads/FoodFacilities.zip',
                 :kml => 'http://www.regionofwaterloo.ca/opendatadownloads/FoodFacilities_kmz.zip',
@@ -51,7 +51,7 @@ class Acquisitions
   end
 
   def guelph
-      {path: 'app/assets/guelph',
+      {path: 'lib/assets/guelph',
       url: 'http://www.checkbeforeyouchoose.ca',
       # keep search size at -1 to get all results
       search_term: '/Facility?search-term=&report-type=ffffffff-ffff-ffff-ffff-fffffffffff1&area=&style=&infractions=&sort-by=Name&alpha=&page=0&page-size=-1',
@@ -63,7 +63,7 @@ class Acquisitions
     {url: 'http://disclosure.york.ca',
      # keep search size at -1 to get all results
      search_term: '/Facility?search-term=&report-type=ffffffff-ffff-ffff-ffff-fffffffffff1&area=&style=&infractions=&sort-by=Name&alpha=&page=0&page-size=-1',
-     path: 'app/assets/york',
+     path: 'lib/assets/york',
      filename: nil,
      category: 'yorksafe',
      region: 'York'}

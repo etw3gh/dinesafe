@@ -1,10 +1,10 @@
+require_relative('../app_regional/acquisitions')
+require_relative('../app_regional/ontario/durham_dinesafe/durham_pwner')
+require_relative('../app_regional/ontario/durham_dinesafe/durham_scraper')
+
 namespace :durham do
 
   durham = Acquisitions.instance.durham
-
-  # WARNING this takes a while, to speed up, minimize other network usage during this task
-  # At last count 3181 web pages are saved to the app/assets/dinesafe_durham/#{timestamp} directory
-  # DONT BE A DICK: run this task late at night
 
   desc "Pwns ASPX Inspection websites for every restaurant in the Durham region"
   task :pwn => :environment do

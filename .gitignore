@@ -18,23 +18,7 @@ dinesafe.xml
 *_dinesafe.xml
 secrets.yml
 
-/app/assets/dinesafe
-/app/assets/shapefiles
-/app/assets/shapefiles/*
-/app/assets/infodine
-/app/assets/dinesafe_durham
-
-app/assets/waterloo
-app/assets/windsor
-app/assets/london
-app/assets/lambton
-app/assets/sarnia
-app/assets/york
-app/assets/windsor
-app/assets/guelph
-app/assets/ny
-app/assets/bc
-
+/lib/assets/
 
 
 *.dbf
@@ -44,7 +28,7 @@ app/assets/bc
 *.shx
 *.zip
 
-# contains twitter app secrets
+# contains twitter lib secrets
 # http://rubydoc.info/gems/chatterbot/0.9.0/frames
 chatterbot.yml
 
