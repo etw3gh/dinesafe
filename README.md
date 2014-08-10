@@ -1,9 +1,13 @@
 Dinesafe
 ===
 
-Monitors the City of Toronto dinesafe xml archive for changes.
+Monitors open data from Waterloo region and the Toronto.
 Compiles all versions into a master archive.
-Web scrapes other regions in Ontario without open data inspection formats.
+
+Collects inspection urls from other regions in Ontario without
+open data inspection formats and stores them the Grab model.
+
+URLs in the Grab model are then scraped and serialized.
 
 Licence
 ---
