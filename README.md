@@ -1,7 +1,7 @@
 Dinesafe
 ===
 
-Monitors open data from Waterloo region and the Toronto.
+Monitors open data from the Waterloo region and Toronto.
 Compiles all versions into a master archive.
 
 Collects inspection urls from other regions in Ontario without
