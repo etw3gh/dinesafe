@@ -24,7 +24,7 @@ class Acquisitions
   def durham
     {url: 'http://www.durham.ca/dineSafe/DineSafeInspectionSearch.aspx',
      path: 'app/assets/dinesafe_durham',
-     prefix: 'http://www.durham.ca/dineSafe/',
+     prefix: 'http://www.durham.ca/dineSafe/',    # TODO please standardize this stuff
      archive: 'app/assets/dinesafe_durham/archives',
      category: 'durham',
      region: 'Durham'}
@@ -50,10 +50,18 @@ class Acquisitions
      region: 'Waterloo'}
   end
 
-  # keep search size at -1 to get all results
+  def guelph
+      {path: 'app/assets/guelph',
+      url: 'http://www.checkbeforeyouchoose.ca',
+      # keep search size at -1 to get all results
+      search_term: '/Facility?search-term=&report-type=ffffffff-ffff-ffff-ffff-fffffffffff1&area=&style=&infractions=&sort-by=Name&alpha=&page=0&page-size=-1',
+      category: 'checkbeforeyouchoose',
+      region: 'Durham'}
+  end
+
   def york
-    {
-     url: 'http://disclosure.york.ca',
+    {url: 'http://disclosure.york.ca',
+     # keep search size at -1 to get all results
      search_term: '/Facility?search-term=&report-type=ffffffff-ffff-ffff-ffff-fffffffffff1&area=&style=&infractions=&sort-by=Name&alpha=&page=0&page-size=-1',
      path: 'app/assets/york',
      filename: nil,

@@ -60,6 +60,13 @@ https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regiona
 scraper:
 https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/durham_dinesafe/durham_scraper.rb
 
+Guelph / Wellington
+---
+
+http://www.checkbeforeyouchoose.ca/Facility?search-term=&report-type=ffffffff-ffff-ffff-ffff-fffffffffff1&area=&style=&infractions=&sort-by=Name&alpha=&page=0&page-size=-1
+
+Now this is cute. They've decided to call their restaurant inspection model "Check Before You Choose".
+That is something they should have done before picking that name.
 
 InfoDine - Niagara (12 regions)
 ---

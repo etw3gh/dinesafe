@@ -31,6 +31,10 @@ app/assets/lambton
 app/assets/sarnia
 app/assets/york
 app/assets/windsor
+app/assets/guelph
+app/assets/ny
+app/assets/bc
+
 
 
 *.dbf
