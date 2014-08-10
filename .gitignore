@@ -22,6 +22,13 @@ secrets.yml
 /app/assets/infodine
 /app/assets/dinesafe_durham
 
+app/assets/waterloo
+app/assets/windsor
+app/assets/london
+app/assets/lambton
+app/assets/sudbury
+
+
 *.dbf
 *.prj
 *.shp
