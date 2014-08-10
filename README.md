@@ -99,7 +99,13 @@ as the urls and web structure are the same or similar.
 
 Not hard to request all records in one page by setting &page-size=-1
 
-General class that covers Guelph / Wellington,Timiskaming, &  York region:
+https://github.com/openciti/dinesafe/blob/master/lib/app_regional/facility_type_site_pwner.rb
+
+    General class that covers
+        Guelph / Wellington
+        Timiskaming
+        York region
+        Vancouver Coastal Region
 
 
 
