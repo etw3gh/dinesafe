@@ -1,7 +1,7 @@
 class Header
-  attr_reader :url
+  attr_accessor :url
 
-  def initialize(u)
+  def initialize(u = nil)
     @url = u
   end
 

@@ -1,5 +1,8 @@
 require_relative('../app_regional/acquisitions')
-
+require_relative('../app_regional/header')
+require_relative('../app_regional/ontario/dinesafe/archiver')
+require_relative('../app_regional/ontario/dinesafe/dinesafe_scraper')
+require_relative('../app_regional/ontario/dinesafe/dinesafe_geo')
 namespace :dinesafe do
 
   dinesafe = Acquisitions.instance.dinesafe

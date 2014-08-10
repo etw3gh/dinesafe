@@ -91,7 +91,8 @@ https://github.com/openciti/dinesafe/blob/master/lib/app_regional/ontario/infodi
     - TODO start a cron task to perform scraping on the over 3000 inspection urls
     - TODO write the final scraper
 
-Regions Using the 'Facility' web application
+Regions Using the 'Hedgerow' web application,
+referred to as 'Facility' due to this term common to the URLs
 ===
 
 Inspections for these regions are very easy to access,
