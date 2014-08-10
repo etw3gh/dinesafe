@@ -1,6 +1,12 @@
 Dinesafe
 ===
 
+A dinesafe application covering as much of Ontario as possible.
+Twitter: @mydinesafe will serve data by interactive tweet
+https://twitter.com/mydinesafe
+Web: TODO
+Android: TODO
+
 Monitors open data from the Waterloo region and Toronto.
 Compiles all versions into a master archive.
 
