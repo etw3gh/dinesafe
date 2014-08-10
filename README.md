@@ -9,10 +9,13 @@ open data inspection formats and stores them the Grab model.
 
 URLs in the Grab model are then scraped and serialized.
 
-Licence
+Licences
 ---
 Contains information licensed under the Open Government Licence – Toronto.
 http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=4a37e03bb8d1e310VgnVCM10000071d60f89RCRD
+
+Contains information provided by the Regional Municipality of Waterloo under licence
+http://www.regionofwaterloo.ca/en/regionalGovernment/OpenDataLicence.asp.
 
 Acquisitions Singleton
 ---
