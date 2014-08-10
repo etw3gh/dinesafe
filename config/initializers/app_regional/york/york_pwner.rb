@@ -22,7 +22,7 @@ class YorkPwner
     fetch_table.each do |i|
 
       link = i.attributes['href'].to_s
-      
+
       filename = link.split('/').last + '.html'
       destination_file = File.join(timestamp_dir, filename)
 

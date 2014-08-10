@@ -18,7 +18,7 @@ dinesafe.xml
 *_dinesafe.xml
 secrets.yml
 
-
+/app/assets/dinesafe
 /app/assets/shapefiles
 /app/assets/shapefiles/*
 /app/assets/infodine

@@ -20,19 +20,15 @@
 =end
 
 class ArchiveDirectory
-  attr_reader :aq, :archive_file, :make_path, :extract_timestamp,
+  attr_reader :aq, :make_path, :extract_timestamp,
               :improper_file, :get_second_last_file, :get_sorted_timestamps
 
   def initialize(aq)
     @aq = aq
   end
 
-  def archive_file
-    aq[:category].to_sym
-  end
-
   def make_path(middle_portion)
-    File.join(aq[:path], middle_portion, aq[archive_file])
+    File.join(aq[:path], middle_portion, aq[:archive])
   end
 
   def extract_timestamp(file_name)
