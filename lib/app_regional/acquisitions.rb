@@ -3,6 +3,10 @@ require 'singleton'
 class Acquisitions
   include Singleton
 
+  # OPEN DATA REGIONS
+
+  #TODO combine shapefiles into toronto
+  #toronto
   def shapefiles
     {url: 'http://opendata.toronto.ca/gcc/address_points_wgs84.zip',
      path: 'app/assets/shapefiles',
@@ -20,6 +24,19 @@ class Acquisitions
      category: 'dinesafe',
      region: 'Toronto'}
   end
+
+  def waterloo
+    {url: 'http://www.regionofwaterloo.ca/en/regionalGovernment/FoodPremiseDataset.asp',
+     path: 'lib/assets/waterloo',
+     filename: nil,
+     subpaths: {:shp =>  'http://www.regionofwaterloo.ca/opendatadownloads/FoodFacilities.zip',
+                :kml => 'http://www.regionofwaterloo.ca/opendatadownloads/FoodFacilities_kmz.zip',
+                :inspections => 'http://www.regionofwaterloo.ca/opendatadownloads/Inspections.zip'},
+     category: 'waterloo',
+     region: 'Waterloo'}
+  end
+
+  # WEB SCRAPE REGIONS
 
   def durham
     {url: 'http://www.durham.ca/dineSafe/DineSafeInspectionSearch.aspx',
@@ -39,24 +56,33 @@ class Acquisitions
      region: 'Niagara'}
   end
 
-  def waterloo
-    {url: 'http://www.regionofwaterloo.ca/en/regionalGovernment/FoodPremiseDataset.asp',
-     path: 'lib/assets/waterloo',
+  def halton
+    {url: 'http://webaps.halton.ca/health/services/foodsafety/',
+     # keep search size at 25000 to get all results
+     search_term: 'page1_size25000.aspx',
+     path: 'app/assets/halton',
      filename: nil,
-     subpaths: {:shp =>  'http://www.regionofwaterloo.ca/opendatadownloads/FoodFacilities.zip',
-                :kml => 'http://www.regionofwaterloo.ca/opendatadownloads/FoodFacilities_kmz.zip',
-                :inspections => 'http://www.regionofwaterloo.ca/opendatadownloads/Inspections.zip'},
-     category: 'waterloo',
-     region: 'Waterloo'}
+     category: 'dinewise',
+     region: 'Halton'}
+  end
+
+  def bc
+    
+  end
+
+  # Faciltiy type sites
+
+  def timiskaming
+    {url: 'http://tihu.hedgerowsoftware.com/Facility?alpha=&search-term=&submit-search=&page-size=-1'}
   end
 
   def guelph
-      {path: 'lib/assets/guelph',
-      url: 'http://www.checkbeforeyouchoose.ca',
-      # keep search size at -1 to get all results
-      search_term: '/Facility?search-term=&report-type=ffffffff-ffff-ffff-ffff-fffffffffff1&area=&style=&infractions=&sort-by=Name&alpha=&page=0&page-size=-1',
-      category: 'checkbeforeyouchoose',
-      region: 'Guelph'}
+    {path: 'lib/assets/guelph',
+     url: 'http://www.checkbeforeyouchoose.ca',
+     # keep search size at -1 to get all results
+     search_term: '/Facility?search-term=&report-type=ffffffff-ffff-ffff-ffff-fffffffffff1&area=&style=&infractions=&sort-by=Name&alpha=&page=0&page-size=-1',
+     category: 'checkbeforeyouchoose',
+     region: 'Guelph'}
   end
 
   def york
@@ -69,23 +95,9 @@ class Acquisitions
      region: 'York'}
   end
 
-  def halton
-    {url: 'http://webaps.halton.ca/health/services/foodsafety/',
-     # keep search size at 25000 to get all results
-     search_term: 'page1_size25000.aspx',
-     path: 'app/assets/halton',
-     filename: nil,
-     category: 'dinewise',
-     region: 'Halton'}
+  # vancouver coastal health
+  def van
+
   end
-
-
-
-  def temiskaming
-    {url: 'http://tihu.hedgerowsoftware.com/Facility?alpha=&search-term=&submit-search=&page-size=-1'}
-  end
-
-
-
 
 end
