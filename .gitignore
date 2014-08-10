@@ -17,6 +17,8 @@
 dinesafe.xml
 *_dinesafe.xml
 secrets.yml
+
+
 /app/assets/shapefiles
 /app/assets/shapefiles/*
 /app/assets/infodine
@@ -26,7 +28,9 @@ app/assets/waterloo
 app/assets/windsor
 app/assets/london
 app/assets/lambton
-app/assets/sudbury
+app/assets/sarnia
+app/assets/york
+app/assets/windsor
 
 
 *.dbf

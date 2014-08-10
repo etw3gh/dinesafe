@@ -1,9 +1,10 @@
 require 'open-uri'
 class NiagaraPwner
-  attr_reader :aq, :timestamp_dir
+  attr_reader :aq, :timestamp_dir, :timestamp
 
-  def initialize(acquisition, timestamp = Time.now.to_i.to_s)
+  def initialize(acquisition, timestamp = Time.now.to_i)
     @aq = acquisition
+    @timestamp = timestamp
     @timestamp_dir = File.join(aq[:path], timestamp.to_s)
     self.ensure_path(timestamp_dir)
   end
@@ -52,10 +53,12 @@ class NiagaraPwner
 
           url = self.strip_chars(url, ['(', ')', 39.chr])
 
-          g = Grab.where(:category => 'infodine',
-                     :path => destination_file,
-                     :url => url,
-                     :downloaded => false).first_or_create
+          g = Grab.where(:category => aq[:category],
+                         :path => destination_file,
+                         :url => url,
+                         :downloaded => false,
+                         :timestamp => timestamp,
+                         :scraped => false).first_or_create
 
           puts g.path.colorize(:green) + ' ' + g.url.colorize(:light_blue)
         end

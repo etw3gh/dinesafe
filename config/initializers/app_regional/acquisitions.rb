@@ -49,4 +49,16 @@ class Acquisitions
      category: 'waterloo',
      region: 'Waterloo'}
   end
+
+  # keep search size at -1 to get all results
+  def york
+    {
+     url: 'http://disclosure.york.ca',
+     search_term: '/Facility?search-term=&report-type=ffffffff-ffff-ffff-ffff-fffffffffff1&area=&style=&infractions=&sort-by=Name&alpha=&page=0&page-size=-1',
+     path: 'app/assets/york',
+     filename: nil,
+     category: 'yorksafe',
+     region: 'York'}
+  end
+
 end

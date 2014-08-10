@@ -41,7 +41,7 @@ class DurhamPwner
     urls.each do |url_suffix|
       id = url_suffix.split('=').last.strip
       url = aq[:prefix] + url_suffix
-      destination_file = File.join(destination, id)
+      destination_file = File.join(destination, id + '.html')
       system("wget #{url} -O #{destination_file}")
 
       unless $?.exitstatus == 0
@@ -50,10 +50,10 @@ class DurhamPwner
       end
 
       if fails.count == 0
+        puts 'No errors!'.colorize(:green)
+      else
         puts "#{fails.count} Errors: "
         puts fails
-      else
-        puts 'No errors!'.colorize(:green)
       end
     end
   end
