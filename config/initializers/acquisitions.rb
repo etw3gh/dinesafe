@@ -1,4 +1,3 @@
-# good candidate to seed into an Acquisitions model,
 require 'singleton'
 
 class Acquisitions
@@ -40,4 +39,14 @@ class Acquisitions
      region: 'Niagara'}
   end
 
+  def waterloo
+    {url: 'http://www.regionofwaterloo.ca/en/regionalGovernment/FoodPremiseDataset.asp',
+     path: 'app/assets/waterloo',
+     filename: nil,
+     subpaths: {:shp =>  'http://www.regionofwaterloo.ca/opendatadownloads/FoodFacilities.zip',
+                :kml => 'http://www.regionofwaterloo.ca/opendatadownloads/FoodFacilities_kmz.zip',
+                :inspections => 'http://www.regionofwaterloo.ca/opendatadownloads/Inspections.zip'},
+     category: 'waterloo',
+     region: 'Waterloo'}
+  end
 end
