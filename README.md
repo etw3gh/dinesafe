@@ -7,7 +7,7 @@ https://twitter.com/mydinesafe
 Web: TODO
 Android: TODO
 
-Monitors open data from the Waterloo region and Toronto.
+Monitors open data from Peel, Waterloo and Toronto.
 Compiles all versions into a master archive.
 
 Collects inspection urls from other regions in Ontario without
@@ -28,26 +28,26 @@ Acquisitions Singleton
 App data is contained here until as many regions as possible are covered.
 Hopefully, a suitable model will emerge for this to become a singleton model.
 
-https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/acquisitions.rb
+https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/ontario/acquisitions.rb
 
 
 Dinesafe (Toronto) Archive grabber
 ---
-https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/dinesafe/archiver.rb
+https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/ontario/dinesafe/archiver.rb
 
 ArchiveDirectory class
 ---
-https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/dinesafe/archive_directory.rb
+https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/ontario/dinesafe/archive_directory.rb
 
 Dinesafe (Toronto) XML scraper
 ---
-https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/dinesafe/dinesafe_scraper.rb
+https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/ontario/dinesafe/dinesafe_scraper.rb
 
 ShapeFile (Toronto) scraper
 ---
-https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/dinesafe/dinesafe_geo.rb
+https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/ontario/dinesafe/dinesafe_geo.rb
 
-[screencap](https://raw.githubusercontent.com/openciti/dinesafe/master/app/assets/images/dev_screenshots/geo.png)
+[screencap](https://raw.githubusercontent.com/openciti/dinesafe/master/app/assets/ontario/images/dev_screenshots/geo.png)
 
 
 Dinesafe (Durham)
@@ -55,10 +55,10 @@ Dinesafe (Durham)
 Nicely puts all (approx 3000) inspection links on a single page
 
 pwner:
-https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/durham_dinesafe/durham_pwner.rb
+https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/ontario/durham_dinesafe/durham_pwner.rb
 
 scraper:
-https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/durham_dinesafe/durham_scraper.rb
+https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/ontario/durham_dinesafe/durham_scraper.rb
 
 Guelph / Wellington
 ---
@@ -93,7 +93,7 @@ Yorksafe - York region
 Not hard to request all records in one page by setting &page-size=-1
 
 pwner:
-https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/york/york_pwner.rb
+https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/ontario/york/york_pwner.rb
 
 scraper: TODO
 
@@ -102,7 +102,7 @@ Waterloo Region
 Has open data, in csv and kml formats. Shapefile is corrupted.
 
 grabber:
-https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/waterloo/waterloo_archiver.rb
+https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/ontario/waterloo/waterloo_archiver.rb
 
 
 Vancouver Coastal Health
@@ -120,5 +120,5 @@ https://github.com/openciti/dinesafe/tree/master/lib/tasks
     dinesafe:grab dinesafe:parse
     dinesafe:grabshapefile dinesafe:geo
 
-    waterloo:grab infodine:pwn durham:pwn york:pwn
+    guelph:pwn durham:pwn infodine:pwn niagara:pwn york:pwn waterloo:grab
 

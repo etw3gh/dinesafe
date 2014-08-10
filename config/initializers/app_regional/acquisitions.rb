@@ -69,4 +69,23 @@ class Acquisitions
      region: 'York'}
   end
 
+  def halton
+    {url: 'http://webaps.halton.ca/health/services/foodsafety/',
+     # keep search size at 25000 to get all results
+     search_term: 'page1_size25000.aspx',
+     path: 'app/assets/halton',
+     filename: nil,
+     category: 'dinewise',
+     region: 'Halton'}
+  end
+
+
+
+  def temiskaming
+    {url: 'http://tihu.hedgerowsoftware.com/Facility?alpha=&search-term=&submit-search=&page-size=-1'}
+  end
+
+
+
+
 end
