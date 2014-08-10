@@ -94,6 +94,15 @@ Has open data, in csv and kml formats. Shapefile is corrupted.
 grabber:
 https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/waterloo/waterloo_archiver.rb
 
+
+Vancouver Coastal Health
+---
+Good news, same setup as York region!
+
+http://www.inspections.vcha.ca/Facility?search-term=&report-type=ffffffff-ffff-ffff-ffff-fffffffffff1&area=&style=&infractions=&sort-by=Name&alpha=&page=0&page-size=-1
+
+
+
 Rake Tasks
 ---
 https://github.com/openciti/dinesafe/tree/master/lib/tasks
