@@ -32,7 +32,7 @@ http://www.regionofwaterloo.ca/en/regionalGovernment/OpenDataLicence.asp.
 Acquisitions Singleton
 ---
 App data is contained here until as many regions as possible are covered.
-Hopefully, a suitable model will emerge for this to become a singleton model.
+TODO put into a model and seed in seeds.db
 
 https://github.com/openciti/dinesafe/blob/master/lib/app_regional/acquisitions.rb
 
