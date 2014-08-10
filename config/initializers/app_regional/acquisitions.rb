@@ -56,7 +56,7 @@ class Acquisitions
       # keep search size at -1 to get all results
       search_term: '/Facility?search-term=&report-type=ffffffff-ffff-ffff-ffff-fffffffffff1&area=&style=&infractions=&sort-by=Name&alpha=&page=0&page-size=-1',
       category: 'checkbeforeyouchoose',
-      region: 'Durham'}
+      region: 'Guelph'}
   end
 
   def york
