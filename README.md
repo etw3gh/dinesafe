@@ -29,6 +29,9 @@ http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=4a37e03bb8d1e310VgnVCM10
 Contains information provided by the Regional Municipality of Waterloo under licence
 http://www.regionofwaterloo.ca/en/regionalGovernment/OpenDataLicence.asp.
 
+Contains public sector Information made available under The Regional Municipality of Peel's Open Data Licence - Version 1.0
+http://opendata.peelregion.ca/terms-of-use.aspx
+
 Acquisitions Singleton
 ---
 App data is contained here until as many regions as possible are covered.
