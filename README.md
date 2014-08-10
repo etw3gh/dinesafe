@@ -44,7 +44,7 @@ Open Data Regions
 ===
 
 Its 2014, have you seen my open data?
-Apparently only Peel, Toronto and Waterloo know its 2014.
+Apparently only Peel, Toronto and Waterloo know the future is now.
 TODO: send smoke signals to other regions
 
 Dinesafe (Toronto)

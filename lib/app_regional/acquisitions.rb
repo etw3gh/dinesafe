@@ -36,6 +36,10 @@ class Acquisitions
      region: 'Waterloo'}
   end
 
+  def peel
+
+  end
+
   # WEB SCRAPE REGIONS
 
   def durham
@@ -67,7 +71,7 @@ class Acquisitions
   end
 
   def bc
-    
+
   end
 
   # Faciltiy type sites
