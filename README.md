@@ -110,24 +110,6 @@ https://github.com/openciti/dinesafe/blob/master/lib/app_regional/facility_type_
         Vancouver Coastal Region
 
 
-
----
-
-Called "Check Before You Choose":
-something they should have done before choosing that name.
-
-
----
-TODO (has a slight variation on url)
-
-Yorksafe -
----
-
-
-
----
-
-
 British Columbia (BC)
 ===
 
