@@ -2,9 +2,15 @@ Dinesafe
 ===
 
 A dinesafe application covering as much of Ontario as possible.
+
+BC is the next target.
+
 Twitter: @mydinesafe will serve data by interactive tweet
+
 https://twitter.com/mydinesafe
+
 Web: TODO
+
 Android: TODO
 
 Monitors open data from Peel, Waterloo and Toronto.
@@ -28,55 +34,50 @@ Acquisitions Singleton
 App data is contained here until as many regions as possible are covered.
 Hopefully, a suitable model will emerge for this to become a singleton model.
 
-https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/ontario/acquisitions.rb
+https://github.com/openciti/dinesafe/blob/master/lib/app_regional/acquisitions.rb
 
 
-Dinesafe (Toronto) Archive grabber
+Open Data Regions
+===
+
+Its 2014, have you seen my open data?
+Apparently only Peel, Toronto and Waterloo know its 2014.
+TODO: send smoke signals to other regions
+
+Dinesafe (Toronto)
 ---
-https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/ontario/dinesafe/archiver.rb
+Available as an XML file updated on a Monday morning early each month.
+https://github.com/openciti/dinesafe/tree/master/lib/app_regional/ontario/dinesafe
 
-ArchiveDirectory class
+Waterloo Region
 ---
-https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/ontario/dinesafe/archive_directory.rb
+Has open data, in csv and kml formats. Shapefile is corrupted.
 
-Dinesafe (Toronto) XML scraper
+https://github.com/openciti/dinesafe/blob/master/lib/app_regional/ontario/waterloo/waterloo_archiver.rb
+
+Peel Region
 ---
-https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/ontario/dinesafe/dinesafe_scraper.rb
+TODO
 
-ShapeFile (Toronto) scraper
----
-https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/ontario/dinesafe/dinesafe_geo.rb
+Non Open Data Regions
+===
 
-[screencap](https://raw.githubusercontent.com/openciti/dinesafe/master/app/assets/ontario/images/dev_screenshots/geo.png)
+Fax? Smoke signals? Memorandum? Carrier pigeon?
 
+How to ask for open data from these places? #sarcasm
 
 Dinesafe (Durham)
 ---
-Nicely puts all (approx 3000) inspection links on a single page
+Nicely puts all (approx 3000) inspection links on a single page when you click on an empty form.
 
-pwner:
-https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/ontario/durham_dinesafe/durham_pwner.rb
-
-scraper:
-https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/ontario/durham_dinesafe/durham_scraper.rb
-
-Guelph / Wellington
----
-
-Now this is cute. They've decided to call their restaurant inspection model "Check Before You Choose".
-Something they should have done before choosing that name.
-
-Same scheme as York region, code was simply copied.
-
-TODO: general class to cover these type of websites.
+https://github.com/openciti/dinesafe/tree/master/lib/app_regional/ontario/durham_dinesafe
 
 
 InfoDine - Niagara (12 regions)
 ---
-
 More involved than Durham region as there are 12 inspection sites instead of one
 
-https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/infodine/niagara_pwner.rb
+https://github.com/openciti/dinesafe/blob/master/lib/app_regional/ontario/infodine/niagara_pwner.rb
 
     - gets the 12 regional urls from the infodine homepage
     - creates a directory structure with a timestamp as the root and
@@ -87,29 +88,42 @@ https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regiona
     - TODO start a cron task to perform scraping on the over 3000 inspection urls
     - TODO write the final scraper
 
-Yorksafe - York region
----
+Regions Using the same web application
+===
+
+Inspections for these regions are very easy to access,
+as the urls and web structure are the same or similar.
 
 Not hard to request all records in one page by setting &page-size=-1
 
-pwner:
-https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/ontario/york/york_pwner.rb
+TODO: general class to cover these type of websites.
 
-scraper: TODO
-
-Waterloo Region
+Guelph / Wellington
 ---
-Has open data, in csv and kml formats. Shapefile is corrupted.
 
-grabber:
-https://github.com/openciti/dinesafe/blob/master/config/initializers/app_regional/ontario/waterloo/waterloo_archiver.rb
+Called "Check Before You Choose":
+something they should have done before choosing that name.
 
+https://github.com/openciti/dinesafe/blob/master/lib/app_regional/ontario/guelph/guelph_pwner.rb
 
-Vancouver Coastal Health
+Timiskaming
 ---
-Good news, same setup as York region!
+TODO (has a slight variation on url)
+
+Yorksafe - York region
+---
+
+Exactly the same ad Guelph with a different class name (for now, till a generic is written)
+
+Vancouver Coastal Health (VCH)
+---
 
 http://www.inspections.vcha.ca/Facility?search-term=&report-type=ffffffff-ffff-ffff-ffff-fffffffffff1&area=&style=&infractions=&sort-by=Name&alpha=&page=0&page-size=-1
+
+British Columbia (BC)
+===
+
+All regions except for VCH use the same web app.
 
 
 
