@@ -1,4 +1,5 @@
-class GuelphPwner
+require 'open-uri'
+class FacilityTypeSitePwner
   attr_reader :aq, :timestamp_dir, :timestamp
 
   def initialize(acquisition, timestamp = Time.now.to_i)
@@ -35,7 +36,8 @@ class GuelphPwner
                      :scraped => false).first_or_create
 
       puts g.path.colorize(:green) + ' ' + g.url.colorize(:light_blue)
-
     end
   end
+
+  
 end

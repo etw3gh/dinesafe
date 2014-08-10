@@ -77,7 +77,11 @@ class Acquisitions
   # Faciltiy type sites
 
   def timiskaming
-    {url: 'http://tihu.hedgerowsoftware.com/Facility?alpha=&search-term=&submit-search=&page-size=-1'}
+    {path: 'lib/assets/timiskaming',
+     url: 'http://tihu.hedgerowsoftware.com/',
+     search_term: 'Facility?alpha=&search-term=&submit-search=&page-size=-1',
+     category: '',
+     region: 'timiskaming'}
   end
 
   def guelph
@@ -95,13 +99,19 @@ class Acquisitions
      search_term: '/Facility?search-term=&report-type=ffffffff-ffff-ffff-ffff-fffffffffff1&area=&style=&infractions=&sort-by=Name&alpha=&page=0&page-size=-1',
      path: 'lib/assets/york',
      filename: nil,
+
      category: 'yorksafe',
      region: 'York'}
   end
 
   # vancouver coastal health
   def van
-
+    {url: 'http://www.inspections.vcha.ca',
+     search_term: '/Facility?search-term=&report-type=ffffffff-ffff-ffff-ffff-fffffffffff1&area=&style=&infractions=&sort-by=Name&alpha=&page=0&page-size=-1',
+     path: 'lib/assets/van',
+     category: 'van',
+     region: 'Vancouver'
+    }
   end
 
 end

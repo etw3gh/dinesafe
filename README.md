@@ -99,29 +99,26 @@ as the urls and web structure are the same or similar.
 
 Not hard to request all records in one page by setting &page-size=-1
 
-TODO: general class to cover these type of websites.
+General class that covers Guelph / Wellington,Timiskaming, &  York region:
 
-Guelph / Wellington
+
+
 ---
 
 Called "Check Before You Choose":
 something they should have done before choosing that name.
 
-https://github.com/openciti/dinesafe/blob/master/lib/app_regional/ontario/guelph/guelph_pwner.rb
 
-Timiskaming
 ---
 TODO (has a slight variation on url)
 
-Yorksafe - York region
+Yorksafe -
 ---
 
-Exactly the same ad Guelph with a different class name (for now, till a generic is written)
 
-Vancouver Coastal Health (VCH)
+
 ---
 
-http://www.inspections.vcha.ca/Facility?search-term=&report-type=ffffffff-ffff-ffff-ffff-fffffffffff1&area=&style=&infractions=&sort-by=Name&alpha=&page=0&page-size=-1
 
 British Columbia (BC)
 ===

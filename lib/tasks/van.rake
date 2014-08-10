@@ -1,15 +1,15 @@
 require_relative('../app_regional/acquisitions')
 require_relative('../app_regional/facility_type_site_pwner')
 
-namespace :york do
-  york = Acquisitions.instance.york
+namespace :van do
+  vch = Acquisitions.instance.van
 
-  desc "pwn york regional yorksave site"
+  desc "pwn vancouver coastal health site"
   task :pwn => :environment do
-    y = FacilityTypeSitePwner.new(york)
+    v = FacilityTypeSitePwner.new(vch)
 
     #stores in grab
-    y.get_inspection_links
+    v.get_inspection_links
 
   end
 end

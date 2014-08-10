@@ -16,6 +16,5 @@ namespace :durham do
   task :scrape => :environment do
     s = DurhamScraper.new(durham)
 
-
   end
 end
