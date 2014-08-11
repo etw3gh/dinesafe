@@ -127,5 +127,5 @@ Cron Jobs
 ---
 Done with RufusScheduler https://github.com/jmettraux/rufus-scheduler
 
-
+https://github.com/openciti/dinesafe/tree/master/config/initializers/crons
 
