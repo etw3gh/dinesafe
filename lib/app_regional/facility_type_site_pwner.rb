@@ -36,7 +36,7 @@ class FacilityTypeSitePwner
                      :path => destination_file,
                      :url => url,
                      :downloaded => false,
-                     :last_modified => nil,
+                     :last_modified => 'aspx',
                      :scraped => false).first_or_create(:timestamp => @timestamp.to_i)
 
       puts g.path.colorize(:green) + ' ' + g.url.colorize(:light_blue)
