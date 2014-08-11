@@ -114,8 +114,6 @@ British Columbia (BC)
 
 All regions except for VCH use the same web app.
 
-
-
 Rake Tasks
 ---
 https://github.com/openciti/dinesafe/tree/master/lib/tasks
@@ -124,4 +122,10 @@ https://github.com/openciti/dinesafe/tree/master/lib/tasks
     dinesafe:grabshapefile dinesafe:geo
 
     guelph:pwn durham:pwn infodine:pwn niagara:pwn york:pwn waterloo:grab
+
+Cron Jobs
+---
+Done with RufusScheduler https://github.com/jmettraux/rufus-scheduler
+
+
 
