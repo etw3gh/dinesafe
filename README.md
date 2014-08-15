@@ -77,7 +77,7 @@ https://github.com/openciti/dinesafe/tree/master/lib/app_regional/ontario/durham
 
 While most scrapes are done with Nokogiri, some aspx (.net) apps require Mechanize.
 
-Mechanize is a way to browse a website programmatically.
+Mechanize is a way to browse websites programmatically.
 
 https://github.com/sparklemotion/mechanize
 
