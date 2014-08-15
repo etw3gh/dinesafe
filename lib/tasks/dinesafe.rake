@@ -11,11 +11,15 @@ namespace :dinesafe do
   desc "Tasks to downloads and unzips dinesafe.xml archive"
   task :grab => :environment do
 
-    city_archive_timestamp = Header.new(dinesafe[:url]).last_modified
+    city_archive_timestamp = Header.new(dinesafe[:url]).last_modified.to_s
 
     latest = LatestArchive.where(:category => dinesafe[:category])
 
-    latest_timestamp = latest[0].headstamp
+    if latest.nil?
+      latest_timestamp = latest[0].headstamp
+    else
+      latest_timestamp = 0
+    end
 
     if latest.count == 0 || latest_timestamp < city_archive_timestamp
       archiver = Archiver.new(dinesafe, city_archive_timestamp)
@@ -39,7 +43,8 @@ namespace :dinesafe do
   task :parse => :environment do
     latest = LatestArchive.where(:category => dinesafe[:category])
     latest_timestamp = latest[0].headstamp
-    DinesafeScraper.new(dinesafe, ArchiveDirectory.new(dinesafe)).parse(latest_timestamp)
+
+    DinesafeScraper.new(dinesafe, ArchiveDirectory.new(dinesafe)).parse(latest_timestamp) unless latest.nil?
   end
 
   desc "Parses all the xml archives and persists the data"

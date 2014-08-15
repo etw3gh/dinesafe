@@ -51,12 +51,14 @@ class Archiver
     archive_time_stamp = timestamp.split('_')[0]
     zip_full_path = File.join(a[:archive], file_name_base)
 
+    data_dir_name = File.join(a[:path], archive_time_stamp)
     data_dir = Dir.entries(File.join(a[:path], archive_time_stamp))
+
     extracted_files = data_dir.count - 2
 
     archive = Archive.where( :timestamp => archive_time_stamp,
                              :zip => zip_full_path,
-                             :data => data_dir,
+                             :data => data_dir_name,
                              :filecount => extracted_files,
                              :region => a[:region],
                              :category => a[:category],

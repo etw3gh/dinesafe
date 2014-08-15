@@ -75,6 +75,11 @@ Nicely puts all (approx 3000) inspection links on a single page when you click o
 
 https://github.com/openciti/dinesafe/tree/master/lib/app_regional/ontario/durham_dinesafe
 
+While most scrapes are done with Nokogiri, some aspx (.net) apps require Mechanize.
+
+Mechanize is way to browse a website programmatically.
+
+https://github.com/sparklemotion/mechanize
 
 InfoDine - Niagara (12 regions)
 ---
