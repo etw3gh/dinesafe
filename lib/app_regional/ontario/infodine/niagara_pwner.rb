@@ -1,50 +1,69 @@
 require 'open-uri'
 class NiagaraPwner
-  attr_reader :aq, :timestamp_dir, :timestamp
+  attr_reader :home_page, :aq, :timestamp_dir, :timestamp, :region_links, :city_offset, :regional_noko
+  attr_accessor :regional_inspections_url
 
   def initialize(acquisition, timestamp = Time.now.to_i)
     @aq = acquisition
     @timestamp = timestamp
     @timestamp_dir = File.join(aq[:path], timestamp.to_s)
     self.ensure_path(timestamp_dir)
+    @city = 'cityname'
+    @city_noko_query = ['form#infodine_search_form', 'a']
+    @regional_noko_query = 'div#global_content>ul.infodine_list_results'
+    @href = 'href'
+    @link_noko_query = 'a[href]'
+    @addy_noko_query = 'span.info_address'
+    @name_noko_query = 'span.info_business'
+    @date_noko_query = 'span.info_inspection'
+
   end
 
   def ensure_path(path)
     FileUtils.mkpath(path) unless File.exists?(path)
   end
 
+  def home_page
+    Nokogiri::HTML(open(aq[:url]))
+  end
+
+  def region_links
+    home_page.css(@city_noko_query.first).css(@city_noko_query.last)
+  end
+
+   # we need to skip to postion right after 'cityname=' in the url
+  def city_offset
+    @city.length + 1
+  end
+
+  def regional_noko
+    Nokogiri::HTML(open(regional_inspections_url))
+  end
+
   def get_inspection_data
-    home_page = Nokogiri::HTML(open(aq[:url]))
-    region_links = home_page.css('form#infodine_search_form').css('a')
-
-    city = 'cityname'
-
-    # skip to postion right after cityname= in the url
-    city_offset = city.length + 1
 
     region_links.map do |a|
 
       #extract link
-      link = a['href']
+      link = a[@href]
 
       # extract region and translate + to underscore (tr)
-      region = link[(link =~ Regexp.new(city)) + city_offset..link.length].strip.tr('+', '_')
+      region = link[(link =~ Regexp.new(@city)) + city_offset..link.length].strip.tr('+', '_')
       puts region.colorize(:orange)
 
       regional_dir = File.join(timestamp_dir, region)
       self.ensure_path(regional_dir)
 
       regional_inspections_url = File.join(aq[:url], link)
-      regional_noko = Nokogiri::HTML(open(regional_inspections_url))
 
       link = addy = name = date = ''
 
-      for div in regional_noko.css('div#global_content>ul.infodine_list_results').children
+      regional_noko.css(@regional_noko_query).children.each do |div|
 
-        link = div.css('a[href]').map {|e| e['href']}[0]
-        addy = div.css('span.info_address').text.to_s
-        name = div.css('span.info_business').text.to_s
-        date = div.css('span.info_inspection').text.to_s
+        link = div.css(@link_noko_query).map {|e| e[@href]}[0]
+        addy = div.css(@addy_noko_query).text.to_s
+        name = div.css(@name_noko_query).text.to_s
+        date = div.css(@date_noko_query).text.to_s
 
         unless link.nil?
           file_name = CGI::escape(name.strip.gsub(' ', '_'))+ '.html'
