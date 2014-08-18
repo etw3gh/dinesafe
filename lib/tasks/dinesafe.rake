@@ -11,12 +11,12 @@ namespace :dinesafe do
   desc "Tasks to downloads and unzips dinesafe.xml archive"
   task :grab => :environment do
 
-    city_archive_timestamp = Header.new(dinesafe[:url]).last_modified.to_s
+    city_archive_timestamp = Header.new(dinesafe[:url]).last_modified.to_i
 
     latest = LatestArchive.where(:category => dinesafe[:category])
 
     if latest.nil?
-      latest_timestamp = latest[0].headstamp
+      latest_timestamp = latest[0].headstamp.to_i
     else
       latest_timestamp = 0
     end
@@ -32,7 +32,7 @@ namespace :dinesafe do
 
       archiver.persist
 
-      la = LatestArchive.create(:category => dinesafe[:category], :headstamp => city_archive_timestamp)
+      la = LatestArchive.where(:category => dinesafe[:category], :headstamp => city_archive_timestamp).first_or_create
       puts "Latest #{dinesafe[:category]} Archive stored: #{city_archive_timestamp}"
     else
       puts 'Archive not downloaded. Fresh copy not available'.colorize(:red)
