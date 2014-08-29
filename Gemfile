@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
 
+
+# TODO group in to test, development and production
+
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.2'
 # Use postgresql as the database for Active Record
@@ -68,3 +72,8 @@ gem 'chatterbot'
 
 # for pry in the rails console
 gem 'pry-rails'
+
+# for City of Ottawa API
+# 'CKAN' is a Ruby client of the Comprehensive Knowledge Archive Network.
+# https://github.com/acrogenesis/CKAN-rb
+gem 'ckan'
