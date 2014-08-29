@@ -35,6 +35,7 @@ GEM
       launchy (>= 2.1.2)
       oauth (>= 0.4.7)
       twitter (= 5.8.0)
+    ckan (0.0.3)
     coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -189,6 +190,7 @@ PLATFORMS
 
 DEPENDENCIES
   chatterbot
+  ckan
   coffee-rails (~> 4.0.0)
   colorize
   dbf (~> 2.0.7)
