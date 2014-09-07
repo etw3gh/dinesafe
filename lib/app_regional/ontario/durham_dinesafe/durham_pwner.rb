@@ -1,25 +1,24 @@
 class DurhamPwner
 
-  attr_reader :aq, :timestamp
-
   def initialize(acquisition)
     @aq = acquisition
     @timestamp = Time.now.to_i
+    @should_contain = "DineSafeInspectionResults"
+    @form = "aspnetForm"
+    @html_suffix = ".html"
   end
 
   def inspections
-    agent = Mechanize.new
-    query_page = agent.get(aq[:url])
-    form = query_page.form("aspnetForm")
+    query_page = Mechanize.new.get(@aq[:url])
+    form = query_page.form(@form)
     button = form.button
     form.submit(button).links
   end
 
   def get_urls(links)
     urls = Array.new
-    should_contain = "DineSafeInspectionResults"
     links.each do |link|
-      if link.href.include? should_contain
+      if link.href.include? @should_contain
         #strip url of all whitespace including \r, \n and \t anywhere in the string
         urls.push(link.href.gsub(/\s+/, ''))
       end
@@ -34,14 +33,14 @@ class DurhamPwner
   def mass_wget(urls)
     fails = Array.new
 
-    self.ensure_dir(aq[:path])
-    destination = File.join(aq[:path], timestamp.to_s)
+    self.ensure_dir(@aq[:path])
+    destination = File.join(@aq[:path], @timestamp.to_s)
     self.ensure_dir(destination)
 
     urls.each do |url_suffix|
       id = url_suffix.split('=').last.strip
-      url = aq[:prefix] + url_suffix
-      destination_file = File.join(destination, id + '.html')
+      url = @aq[:prefix] + url_suffix
+      destination_file = File.join(destination, id + @html_suffix)
       system("wget #{url} -O #{destination_file}")
 
       unless $?.exitstatus == 0
