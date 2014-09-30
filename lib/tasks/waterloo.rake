@@ -1,5 +1,5 @@
 require_relative('../app_regional/acquisitions')
-
+require_relative('../app_regional/ontario/waterloo/waterloo_archiver')
 
 namespace :waterloo do
   waterloo = Acquisitions.instance.waterloo

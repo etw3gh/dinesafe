@@ -18,6 +18,7 @@ class NiagaraPwner
     @date_noko_query = 'span.info_inspection'
 
   end
+  
 
   def ensure_path(path)
     FileUtils.mkpath(path) unless File.exists?(path)
@@ -36,7 +37,7 @@ class NiagaraPwner
     @city.length + 1
   end
 
-  def regional_noko
+  def regional_noko(regional_inspections_url)
     Nokogiri::HTML(open(regional_inspections_url))
   end
 
@@ -58,7 +59,7 @@ class NiagaraPwner
 
       link = addy = name = date = ''
 
-      regional_noko.css(@regional_noko_query).children.each do |div|
+      regional_noko(regional_inspections_url).css(@regional_noko_query).children.each do |div|
 
         link = div.css(@link_noko_query).map {|e| e[@href]}[0]
         addy = div.css(@addy_noko_query).text.to_s
