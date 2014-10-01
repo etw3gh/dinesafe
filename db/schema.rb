@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 20140810170243) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "scraped",       default: false
-    t.integer  "timestamp",     default: 1407641758
+    t.integer  "timestamp",     default: 1412118302
     t.integer  "last_modified"
   end
 

@@ -15,10 +15,10 @@ namespace :dinesafe do
 
     latest = LatestArchive.where(:category => dinesafe[:category])
 
-    if latest.nil?
-      latest_timestamp = latest[0].headstamp.to_i
-    else
+    if latest.blank?
       latest_timestamp = 0
+    else
+      latest_timestamp = latest[0].headstamp.to_i
     end
 
     if latest.count == 0 || latest_timestamp < city_archive_timestamp
