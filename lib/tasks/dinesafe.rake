@@ -13,6 +13,7 @@ namespace :dinesafe do
 
     city_archive_timestamp = Header.new(dinesafe[:url]).last_modified.to_i
 
+    # Latest archive has one entry per category type
     latest = LatestArchive.where(:category => dinesafe[:category])
 
     if latest.blank?
@@ -20,7 +21,9 @@ namespace :dinesafe do
     else
       latest_timestamp = latest[0].headstamp.to_i
     end
-
+    
+    puts "City Archive header: ".colorize(:blue) + "#{city_archive_timestamp}".colorize(:light_blue)
+    puts "Latest Timestamp: ".colorize(:blue) + "#{latest_timestamp}".colorize(:light_blue)
     if latest.count == 0 || latest_timestamp < city_archive_timestamp
       archiver = Archiver.new(dinesafe, city_archive_timestamp)
       f, fb, fr = archiver.print_setup
@@ -32,7 +35,11 @@ namespace :dinesafe do
 
       archiver.persist
 
-      la = LatestArchive.where(:category => dinesafe[:category], :headstamp => city_archive_timestamp).first_or_create
+      # update Latest Archive
+      la = LatestArchive.find_by_category(dinesafe[:category])
+      la.headstamp = city_archive_timestamp
+      la.save
+
       puts "Latest #{dinesafe[:category]} Archive stored: #{city_archive_timestamp}"
     else
       puts 'Archive not downloaded. Fresh copy not available'.colorize(:red)
