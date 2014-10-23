@@ -51,7 +51,7 @@ Dinesafe (Toronto)
 ---
 Available as an XML file updated on a Monday morning early each month.
 https://github.com/openciti/dinesafe/tree/master/lib/app_regional/ontario/dinesafe
-
+![Screenshot](https://raw.githubusercontent.com/openciti/dinesafe/master/app/assets/images/dev_screenshots/DineSafeGrabber.png)
 Waterloo Region
 ---
 Has open data, in csv and kml formats. Shapefile is corrupted.
