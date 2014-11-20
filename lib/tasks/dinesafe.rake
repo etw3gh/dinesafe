@@ -11,38 +11,42 @@ namespace :dinesafe do
   desc "Tasks to downloads and unzips dinesafe.xml archive"
   task :grab => :environment do
 
-    city_archive_timestamp = Header.new(dinesafe[:url]).last_modified.to_i
+    begin
+      city_archive_timestamp = Header.new(dinesafe[:url]).last_modified.to_i
 
-    # Latest archive has one entry per category type
-    latest = LatestArchive.where(:category => dinesafe[:category])
+      # Latest archive has one entry per category type
+      latest = LatestArchive.where(:category => dinesafe[:category])
 
-    if latest.blank?
-      latest_timestamp = 0
-    else
-      latest_timestamp = latest[0].headstamp.to_i
-    end
-    
-    puts "City Archive header: ".colorize(:blue) + "#{city_archive_timestamp}".colorize(:light_blue)
-    puts "Latest Timestamp: ".colorize(:blue) + "#{latest_timestamp}".colorize(:light_blue)
-    if latest.count == 0 || latest_timestamp < city_archive_timestamp
-      archiver = Archiver.new(dinesafe, city_archive_timestamp)
-      f, fb, fr = archiver.print_setup
+      if latest.blank?
+        latest_timestamp = 0
+      else
+        latest_timestamp = latest[0].headstamp.to_i
+      end
 
-      puts "\nDownloading #{f}............".colorize(:green)
-      puts archiver.grab ? 'Downloaded: '.colorize(:green) + fb : "Failed Download: #{fr}"
-      puts archiver.verify ? 'Verified: '.colorize(:green) + fb : "Failed Verify: #{fr}"
-      puts archiver.extract ? 'Extracted: '.colorize(:green) + fb : "Failed Extraction: #{fr}"
+      puts "City Archive header: ".colorize(:blue) + "#{city_archive_timestamp}".colorize(:light_blue)
+      puts "Latest Timestamp: ".colorize(:blue) + "#{latest_timestamp}".colorize(:light_blue)
+      if latest.count == 0 || latest_timestamp < city_archive_timestamp
+        archiver = Archiver.new(dinesafe, city_archive_timestamp)
+        f, fb, fr = archiver.print_setup
 
-      archiver.persist
+        puts "\nDownloading #{f}............".colorize(:green)
+        puts archiver.grab ? 'Downloaded: '.colorize(:green) + fb : "Failed Download: #{fr}"
+        puts archiver.verify ? 'Verified: '.colorize(:green) + fb : "Failed Verify: #{fr}"
+        puts archiver.extract ? 'Extracted: '.colorize(:green) + fb : "Failed Extraction: #{fr}"
 
-      # update Latest Archive
-      la = LatestArchive.find_by_category(dinesafe[:category])
-      la.headstamp = city_archive_timestamp
-      la.save
+        archiver.persist
 
-      puts "Latest #{dinesafe[:category]} Archive stored: #{city_archive_timestamp}"
-    else
-      puts 'Archive not downloaded. Fresh copy not available'.colorize(:red)
+        # update Latest Archive
+        la = LatestArchive.find_by_category(dinesafe[:category])
+        la.headstamp = city_archive_timestamp
+        la.save
+
+        puts "Latest #{dinesafe[:category]} Archive stored: #{city_archive_timestamp}"
+      else
+        puts 'Archive not downloaded. Fresh copy not available'.colorize(:red)
+      end
+    rescue Faraday::Error::ConnectionFailed
+      puts "[dinesafe:grab] No Internet Connection was available: ".colorize(:light_red) + DateTime.now.to_s.colorize(:yellow)
     end
   end
 
