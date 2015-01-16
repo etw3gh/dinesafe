@@ -7,7 +7,7 @@ cron_hour = 11
 cron_job = "00 #{cron_hour} * * 1-5"
 #           mm hh               m-f
 
-puts "Starting Cron task. Will check for a new ottawa csv archive every weekday at #{cron_hour}pm".colorize(:green)
+puts "Starting Cron task. Will check for a new ottawa csv archive every weekday at #{cron_hour}am".colorize(:green)
 
 Rufus::Scheduler.new.cron cron_job do
   system('rake ottawa:grab')
