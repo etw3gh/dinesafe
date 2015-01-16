@@ -47,6 +47,15 @@ Its 2014, have you seen my open data?
 Apparently only Peel, Toronto and Waterloo know the future is now.
 TODO: send smoke signals to other regions
 
+Ottawa
+---
+The City of Ottawa has decided to release the data in CSV format *and* make it available as an API, which is a first in Canada.
+
+Still working on figuring all this out.
+Check the ottawa branch on the repo: https://github.com/openciti/dinesafe/tree/ottawa
+
+Thanks to Project Manager Ryan Furuness for doing it right.
+
 Dinesafe (Toronto)
 ---
 Available as an XML file updated on a Monday morning early each month.
