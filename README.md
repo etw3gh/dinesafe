@@ -54,6 +54,12 @@ The City of Ottawa has decided to release the data in CSV format *and* make it a
 Still working on figuring all this out.
 Check the ottawa branch on the repo: https://github.com/openciti/dinesafe/tree/ottawa
 
+rake task to grab the archive, store the unzipped file, record the server timestamp and unzip the files
+This only occurs if the archive has been modified (using the faraday gem https://github.com/lostisland/faraday)
+https://github.com/openciti/dinesafe/blob/ottawa/lib/tasks/ottawa.rake
+
+TODO: populate a model based on the csv data
+
 Thanks to Project Manager Ryan Furuness for doing it right.
 
 Dinesafe (Toronto)
