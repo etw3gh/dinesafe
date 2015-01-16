@@ -196,6 +196,7 @@ DEPENDENCIES
   dbf (~> 2.0.7)
   diffy
   faraday
+  fastercsv
   jbuilder (~> 2.0)
   jquery-rails
   mechanize

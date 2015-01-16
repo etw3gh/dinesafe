@@ -77,3 +77,6 @@ gem 'pry-rails'
 # 'CKAN' is a Ruby client of the Comprehensive Knowledge Archive Network.
 # https://github.com/acrogenesis/CKAN-rb
 gem 'ckan'
+
+# used to convert binary csv to text format
+gem 'iconv'
