@@ -45,9 +45,19 @@ namespace :ottawa do
         archiver.persist
 
         # update Latest Archive
-        la = LatestArchive.find_by_category(ottawa[:category])
-        la.headstamp = city_archive_timestamp
-        la.save
+        la = LatestArchive.where(:category => ottawa[:category])
+
+        # TODO add this to dinesafe rake task in case user is starting from scratch, the current dinesafe:grab will throw an error
+        if la.blank?
+          #create Latest Archive where none exists
+          LatestArchive.where(:category => ottawa[:category],
+                              :headstamp => city_archive_timestamp).first_or_create
+        else
+          # update Latest Archive
+          la = LatestArchive.find_by_category(ottawa[:category])
+          la.headstamp = city_archive_timestamp
+          la.save
+        end
 
         puts "Latest #{ottawa[:category]} Archive stored: #{city_archive_timestamp}"
       else
