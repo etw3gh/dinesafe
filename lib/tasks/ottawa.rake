@@ -12,7 +12,7 @@ namespace :ottawa do
 
   ottawa = Acquisitions.instance.ottawa
 
-  desc "acquire the three archives: shp, kml and inspections"
+  desc "acquire the three zipped inspection data (binary csv)"
   task :grab => :environment do
 
     #o = OttawaArchiver.new(ottawa).grab
