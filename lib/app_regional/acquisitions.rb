@@ -33,15 +33,35 @@ class Acquisitions
     {url: 'http://www.regionofwaterloo.ca/en/regionalGovernment/FoodPremiseDataset.asp',
      path: "#{@assets_root}waterloo",
      filename: nil,
-     subpaths: {:shp =>  'http://www.regionofwaterloo.ca/opendatadownloads/FoodFacilities.zip',
-                :kml => 'http://www.regionofwaterloo.ca/opendatadownloads/FoodFacilities_kmz.zip',
-                :inspections => 'http://www.regionofwaterloo.ca/opendatadownloads/Inspections.zip'},
+     subpaths: {
+          :shp =>  'http://www.regionofwaterloo.ca/opendatadownloads/FoodFacilities.zip',
+          :kml => 'http://www.regionofwaterloo.ca/opendatadownloads/FoodFacilities_kmz.zip',
+          :inspections => 'http://www.regionofwaterloo.ca/opendatadownloads/Inspections.zip'
+     },
      category: 'waterloo',
      region: 'Waterloo'}
   end
 
   def peel
 
+  end
+
+  def ottawa
+    {
+        url: 'http://app01.ottawa.ca/inspections-opendata/yelp_ottawa_healthscores.zip',
+        path: "#{@assets_root}ottawa",
+        filename: nil,
+        archive: "#{@assets_root}ottawa/archives",
+        contents: {
+              :businesses => 'businesses.csv',
+              :feed_info => 'feed_info.csv',
+              :inspections => 'inspections.csv',
+              :legend => 'legend.csv',
+              :violations => 'violations.csv'
+        },
+        category: 'ottawa',
+        region: 'Ottawa'
+    }
   end
 
   # WEB SCRAPE REGIONS
