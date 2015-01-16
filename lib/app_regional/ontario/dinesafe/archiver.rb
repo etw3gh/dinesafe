@@ -65,6 +65,7 @@ class Archiver
                              :headstamp => headstamp).first_or_create
 
     puts "Archive result: #{archive.timestamp}, #{archive.zip}" unless archive.nil?
+    a
   end
 
   def print_setup
