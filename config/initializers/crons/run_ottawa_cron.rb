@@ -2,7 +2,7 @@
 # Rufus Scheduler will execute the code in its block at that time
 
 # set for noon as most archives seem to be done by late morning
-cron_hour = 12
+cron_hour = 11
 
 cron_job = "00 #{cron_hour} * * 1-5"
 #           mm hh               m-f
