@@ -27,7 +27,6 @@ class WaterlooArchiver
       puts '-' * 80
       puts sub_path.colorize(:light_green)
 
-
       data_path = File.join(tsdir, sub_path)
       self.ensure_path(data_path)
 
